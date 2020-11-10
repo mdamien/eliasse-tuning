@@ -13,7 +13,7 @@ function App() {
     <div id="app">
       <div id="left-column">
         {DATA.amendements ? DATA.amendements.map(amdt => 
-          <Amendement data={amdt}/>
+          <Amendement key={amdt.numero} data={amdt}/>
           ) : null}
       </div>
       <div id="text-column">
@@ -27,6 +27,7 @@ function App() {
 }
 
 function render() {
+  console.log(DATA)
   ReactDOM.render(
     <React.StrictMode>
       <App />

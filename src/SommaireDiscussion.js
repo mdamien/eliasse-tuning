@@ -1,25 +1,36 @@
+import DATA from './data'
+
+function comparePositions(pos1, pos2) {
+   var pos1_0 = parseInt(pos1.split('/')[0])
+   var pos1_1 = parseInt(pos1.split('/')[1])
+   var pos2_0 = parseInt(pos2.split('/')[0])
+   var pos2_1 = parseInt(pos2.split('/')[1])
+
+   if (pos1_1 > pos2_1) {
+      return true
+   }
+   if (pos1_1 == pos2_1) {
+      return pos1_0 > pos2_0
+   }
+   return false
+}
+
 function SommaireDiscussion() {
   return (
    <div style={{padding:10}}>
     <h3>PLF POUR 2021 - 2ème partie - (3360) - SÉANCE</h3>
     <ul>
-      <li>
-        <strong>ETAT B</strong>
-        <ul>
-          <li>Amdt n°415 de Mme Ménard (NI)</li>
-          <li>Amdt n°881 de M. Ruffin (FI)</li>
-          <li>Amdt n°415 de Mme Ménard (NI)</li>
-          <li>Amdt n°881 de M. Ruffin (FI)</li>
-          <li>Amdt n°415 de Mme Ménard (NI)</li>
-          <li>Amdt n°881 de M. Ruffin (FI)</li>
-          <li>Amdt n°415 de Mme Ménard (NI)</li>
-          <li>Amdt n°881 de M. Ruffin (FI)</li>
-        </ul>
-        <hr/>
-      </li>
-      <li>Aprés l'article 56<hr/></li>
-      <li>ETAT B<hr/></li>
-      <li>Article 56</li>
+      {DATA.discussion ? DATA.discussion.divisions.map((div, i) => <li key={div.position}>
+           <strong>{div.place}</strong>
+           <ul>
+             {DATA.amdts_derouleur ? DATA.amdts_derouleur.map(amdt => 
+               (DATA.discussion.divisions[i+1] && comparePositions(amdt.position, DATA.discussion.divisions[i+1].position)) ? 
+                  <li key={amdt.numero}>Amdt n°{amdt.numero} de {amdt.auteurLabel} ({amdt.auteurGroupe})</li>
+               : null
+             ) : null}
+           </ul>
+           <hr/>
+         </li>) : null}
     </ul>
    </div>
   );
