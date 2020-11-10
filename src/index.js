@@ -26,7 +26,6 @@ $.getJSON(proxy + "http://eliasse.assemblee-nationale.fr/eliasse/prochainADiscut
         })
         $.getJSON(proxy + url, function(data) {
             DATA.amendements = data.amendements
-            var url = "http://eliasse.assemblee-nationale.fr/eliasse/amdtDerouleur.do?legislature=15&bibard=3360&bibardSuffixe=C&organeAbrv=CION-SOC&position=13%2F16&page=1&start=0&limit=25"
             $.getJSON(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/amdtDerouleur.do', {
                 legislature: DATA.prochainADiscuter.legislature,
                 bibard: DATA.prochainADiscuter.bibard,
@@ -36,6 +35,18 @@ $.getJSON(proxy + "http://eliasse.assemblee-nationale.fr/eliasse/prochainADiscut
             }, function(data) {
                 DATA.amdts_derouleur = data
                 render()
+                // http://eliasse.assemblee-nationale.fr/eliasse/loadTextContentByBibard.do?
+                // _dc=1605015241519&bibard=3522&legislature=15&bibardSuffixe=&ancreDivision=D_Article_liminaire&isSousAmdt=false
+                $.get(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/loadTextContentByBibard.do', {
+                    legislature: DATA.prochainADiscuter.legislature,
+                    bibard: DATA.prochainADiscuter.bibard,
+                    bibardSuffixe: DATA.prochainADiscuter.bibardSuffixe,
+                    ancreDivision: DATA.amendements[0].ancreDivisionTexteVise,
+                    isSousAmdt: "false", // how to know this ???
+                }, function(data) {
+                    DATA.text = data
+                    render()
+                })
             })
         })
     })

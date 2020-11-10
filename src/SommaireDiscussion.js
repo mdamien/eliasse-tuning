@@ -10,7 +10,7 @@ function comparePositions(pos1, pos2) {
       return true
    }
    if (pos1_1 == pos2_1) {
-      return pos1_0 > pos2_0
+      return pos1_0 >= pos2_0
    }
    return false
 }
@@ -24,7 +24,9 @@ function SommaireDiscussion() {
            <strong>{div.place}</strong>
            <ul>
              {DATA.amdts_derouleur ? DATA.amdts_derouleur.map(amdt => 
-               (DATA.discussion.divisions[i+1] && comparePositions(amdt.position, DATA.discussion.divisions[i+1].position)) ? 
+               (DATA.discussion.divisions[i+1] 
+                     && comparePositions(amdt.position, div.position))
+                     && comparePositions(DATA.discussion.divisions[i+1].position, amdt.position) ? 
                   <li key={amdt.numero}>Amdt n°{amdt.numero} de {amdt.auteurLabel} ({amdt.auteurGroupe})</li>
                : null
              ) : null}
