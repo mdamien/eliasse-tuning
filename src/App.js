@@ -1,17 +1,21 @@
 import './App.css';
 import Amendement from './Amendement';
+import TexteAmendé from './TexteAmendé';
+import SommaireDiscussion from './SommaireDiscussion';
 
 function App() {
   return (
     <div id="app">
       <div id="left-column">
-        <Amendement />
+        <Amendement/>
+        <Amendement/>
+        <Amendement/>
       </div>
       <div id="text-column">
-        hello jorld.
+        <TexteAmendé/>
       </div>
       <div id="discussion-column">
-        hello jorld.
+        <SommaireDiscussion/>
       </div>
     </div>
   );
