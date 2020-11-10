@@ -46,7 +46,9 @@ font-style: italic;
   margin-left:auto;
   margin-right:auto;
 }
-
+.amendement-en-discussion {
+  border: 10px solid #d0d0d0;
+}
 .amendement .dispositif div {
   padding: 0 !important;
 }

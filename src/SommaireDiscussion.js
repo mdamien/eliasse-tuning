@@ -9,7 +9,7 @@ function comparePositions(pos1, pos2) {
    if (pos1_1 > pos2_1) {
       return true
    }
-   if (pos1_1 == pos2_1) {
+   if (pos1_1 === pos2_1) {
       return pos1_0 >= pos2_0
    }
    return false

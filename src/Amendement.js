@@ -1,7 +1,9 @@
+import DATA from './data'
+
 function Amendement(props) {
   var data = props.data;
   return (
-    <div className="amendement">
+    <div className={"amendement" + (data.numero === DATA.prochainADiscuter.numAmdt ? ' amendement-en-discussion' : '')}>
     <a href={'http://www.assemblee-nationale.fr' + data.urlPDF}>PDF</a>
       <center><h1>Amendement n°{data.numero}</h1></center>
       <center><p>de <span dangerouslySetInnerHTML={{__html: data.listeDesSignataires}}></span></p></center>
