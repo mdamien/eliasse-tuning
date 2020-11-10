@@ -21,7 +21,7 @@ function TexteAmendé() {
    return l
   }).join('\n')
   return (
-    <div>
+    <div style={{padding:10}}>
       <div dangerouslySetInnerHTML={{__html: html}} />
     </div>
   );

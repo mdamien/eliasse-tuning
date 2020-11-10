@@ -86,17 +86,19 @@ var expose = `
 Dans le cadre de la gestion de l’épidémie et afin d’assurer une égalité de traitement de l’ensemble des assurés  (mis en isolement, contraints  de garder leurs  enfants ou malades)  du point de  vue  de l’application d’un délai de carence pour le  bénéfice de l’indemnisation des arrêts de  travail,  il    est proposé de supprimer, pendant  la période d’état d’urgence sanitaire, l’application de cette carence dans l’ensemble des régimes (régime général, agricole, régimes spéciaux dont fonction publique).
 `;
 
-function Amendement() {
+function Amendement(props) {
+  var data = props.data;
   return (
     <div className="amendement">
-      <center><h1>Amendement n°204 (Rect)</h1></center>
-      <center><p>du Mme Luquet</p></center>
+    <a href={'http://www.assemblee-nationale.fr' + data.urlPDF}>PDF</a>
+      <center><h1>Amendement n°{data.numero}</h1></center>
+      <center><p>de <span dangerouslySetInnerHTML={{__html: data.listeDesSignataires}}></span></p></center>
       <center><p><strong>ARTICLE 33</strong></p></center>
-      <center><p><strong>ÉTAT B</strong></p></center>
+      <center><p><strong>{data.placeReference}</strong></p></center>
       <center><p><strong>Mission « Écologie, développement et mobilité durables »</strong></p></center>
-      <p className="dispositif" dangerouslySetInnerHTML={{__html: dispositif}}/>
+      <p className="dispositif" dangerouslySetInnerHTML={{__html: data.dispositif}}/>
       <center><p><strong>EXPOSÉ SOMMAIRE</strong></p></center>
-      <p className="expose" dangerouslySetInnerHTML={{__html: expose}}/>
+      <p className="expose" dangerouslySetInnerHTML={{__html: data.exposeSommaire}}/>
     </div>
   );
 }
