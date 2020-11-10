@@ -18,7 +18,7 @@ function comparePositions(pos1, pos2) {
 function SommaireDiscussion() {
   return (
    <div style={{padding:10}}>
-    <h3>PLF POUR 2021 - 2ème partie - (3360) - SÉANCE</h3>
+    <h3>{DATA.discussion ? DATA.discussion.titre : null}</h3>
     <ul>
       {DATA.discussion ? DATA.discussion.divisions.map((div, i) => <li key={div.position}>
            <strong>{div.place}</strong>

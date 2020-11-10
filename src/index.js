@@ -34,9 +34,6 @@ $.getJSON(proxy + "http://eliasse.assemblee-nationale.fr/eliasse/prochainADiscut
                 position: DATA.amendements[0].position,
             }, function(data) {
                 DATA.amdts_derouleur = data
-                render()
-                // http://eliasse.assemblee-nationale.fr/eliasse/loadTextContentByBibard.do?
-                // _dc=1605015241519&bibard=3522&legislature=15&bibardSuffixe=&ancreDivision=D_Article_liminaire&isSousAmdt=false
                 $.get(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/loadTextContentByBibard.do', {
                     legislature: DATA.prochainADiscuter.legislature,
                     bibard: DATA.prochainADiscuter.bibard,
