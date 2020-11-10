@@ -1,38 +1,48 @@
-.App {
-  text-align: center;
+#app, #root, html, body {
+  height: 100%;
+  margin: 0;
+  overflow: auto;
+  font-family: times;
+  width: 100%;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#left-column {
+  float: left;
+  width: 50%;
+  background: #404040;
+  height: 100%;
+  overflow: auto;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#text-column {
+  float: left;
+  width: 30%;
+  height: 100%;
+  overflow: auto;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+#discussion-column {
+  float: left;
+  width: 20%;
+  background: #404040;
+  height: 100%;
+  overflow: auto;
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+#discussion-column ul {
+padding: 0;
+list-style: none;
+margin: 0;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#discussion-column ul ul{
+font-style: italic;
+}
+#discussion-column li {
+  background: #5e5e5e;
+  padding: 4px;
+}
+.amendement {
+  margin: 20px;
+  background: white;
+  padding: 20px;
+  width: 700px;
+  margin-left:auto;
+  margin-right:auto;
 }

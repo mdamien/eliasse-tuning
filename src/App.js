@@ -2,12 +2,16 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          hello jorld.
-        </p>
-      </header>
+    <div id="app">
+      <div id="left-column">
+        hello jorld.
+      </div>
+      <div id="text-column">
+        hello jorld.
+      </div>
+      <div id="discussion-column">
+        hello jorld.
+      </div>
     </div>
   );
 }
