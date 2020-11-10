@@ -18,7 +18,20 @@ function comparePositions(pos1, pos2) {
 function SommaireDiscussion() {
   return (
    <div style={{padding:10}}>
-    <h3>{DATA.discussion ? DATA.discussion.titre : null}</h3>
+    {DATA.organes ?
+        <select>
+          {DATA.organes.map(org => {
+            if (org.textes) {
+              return org.textes.map(texte =>
+                <option key={texte.bibard}>{org.text} - {texte.textTitre}</option>
+              )
+            }
+            return null
+          })}
+        </select>
+    : null}
+    <br/>
+    <br/>
     <ul>
       {DATA.discussion ? DATA.discussion.divisions.map((div, i) => <li key={div.position}>
            <strong>{div.place}</strong>

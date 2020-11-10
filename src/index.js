@@ -42,7 +42,18 @@ $.getJSON(proxy + "http://eliasse.assemblee-nationale.fr/eliasse/prochainADiscut
                     isSousAmdt: "false", // how to know this ???
                 }, function(data) {
                     DATA.text = data
-                    render()
+                    $.getJSON(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/getListeReferenceDesOrganes.do', function(data) {
+                        DATA.organes = data
+                        // http://eliasse.assemblee-nationale.fr/eliasse/textesOrdreDuJour.do?_dc=1605026729361&organeAbrv=AN&page=1&start=0&limit=25
+                        DATA.organes.forEach(function(org, i) {
+                            $.getJSON(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/textesOrdreDuJour.do', {
+                                'organeAbrv': org.value,
+                            }, function(data) {
+                                DATA.organes[i].textes = data
+                                render()
+                            })
+                        })
+                    })
                 })
             })
         })

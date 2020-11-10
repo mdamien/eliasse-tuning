@@ -7,6 +7,7 @@ function Amendement(props) {
     <a href={'http://www.assemblee-nationale.fr' + data.urlPDF}>PDF</a>
       <center><h1>Amendement n°{data.numero}</h1></center>
       <center><p>de <span dangerouslySetInnerHTML={{__html: data.listeDesSignataires}}></span></p></center>
+      {data.sortEnSeance ? <center><p><strong>Sort: {data.sortEnSeance}</strong></p></center> : null}
       <center><p><strong>{data.division.divisionDesignation}</strong></p></center>
       <center><p><strong>{data.division.titre}</strong></p></center>
       <p className="dispositif" dangerouslySetInnerHTML={{__html: data.dispositif}}/>
