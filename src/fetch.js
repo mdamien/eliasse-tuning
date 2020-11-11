@@ -51,14 +51,14 @@ function fetch() {
                     bibard: bibard,
                     bibardSuffixe: bibardSuffixe,
                     organeAbrv: organeAbrv,
-                    position: DATA.amendements[0].position,
+                    position: DATA.amendements[2].position,
                 }, function(data) {
                     DATA.amdts_derouleur = data
                     $.get(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/loadTextContentByBibard.do', {
                         legislature: DATA.prochainADiscuter.legislature,
                         bibard: bibard,
                         bibardSuffixe: bibardSuffixe,
-                        ancreDivision: DATA.amendements[0].ancreDivisionTexteVise,
+                        ancreDivision: DATA.amendements[2].ancreDivisionTexteVise,
                         isSousAmdt: "false", // how to know this ???
                     }, function(data) {
                         DATA.text = data

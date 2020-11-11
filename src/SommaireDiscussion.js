@@ -45,8 +45,8 @@ function SommaireDiscussion() {
         <li>
            <strong>- {div.place}</strong>
            <ul>
-             {DATA.amdts_derouleur ? DATA.amdts_derouleur.map((amdt, j) => {
-               var amdt_span = <span onClick={fetchAmendement.bind(null, DATA.amdts_derouleur[(j+2 < DATA.amdts_derouleur.length) ? j+2 : j].numero)}>
+             {DATA.amdts_derouleur ? DATA.amdts_derouleur.map(amdt => {
+               var amdt_span = <span onClick={fetchAmendement.bind(null, amdt.numero)}>
                   Amdt n°{amdt.numero} de {amdt.auteurLabel} 
                   {amdt.auteurGroupe ? <span> ({amdt.auteurGroupe})</span> : null}
                </span>
@@ -57,7 +57,7 @@ function SommaireDiscussion() {
                      && comparePositions(amdt.position, div.position))
                      && comparePositions(DATA.discussion.divisions[i+1].position, amdt.position) ? 
                   <li key={amdt.numero}>
-                    {DATA.amendements[0].numero === amdt.numero ?
+                    {DATA.amendements[2].numero === amdt.numero ?
                       <u>{amdt_span}</u>
                     : amdt_span
                     }

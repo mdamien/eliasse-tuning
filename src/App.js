@@ -27,10 +27,10 @@ function App() {
           <button title="Suivi automatique">▶️</button>
           <button onClick={loadNextAmendement} title="Amendement suivant">➡️</button>
           </center>
-        <Amendement key={DATA.amendements[0].numero} data={DATA.amendements[0]}/>
+        <Amendement data={DATA.amendements[2]}/>
       </div>
       <div id="text-column">
-        <center><h3>Texte n°{DATA.discussion.bibard} amendé par l'amendement n°{DATA.amendements[0].numero}</h3></center>
+        <center><h3>Texte n°{DATA.discussion.bibard} amendé par l'amendement n°{DATA.amendements[2].numero}</h3></center>
         <hr/>
         <TexteAmendé/>
       </div>
