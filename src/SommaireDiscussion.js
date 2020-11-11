@@ -1,4 +1,5 @@
 import DATA from './data'
+import fetch from './fetch'
 
 function comparePositions(pos1, pos2) {
    var pos1_0 = parseInt(pos1.split('/')[0])
@@ -15,15 +16,22 @@ function comparePositions(pos1, pos2) {
    return false
 }
 
+function changeText(event) {
+  DATA.currentText = event.target.value
+  fetch()
+}
+
 function SommaireDiscussion() {
   return (
    <div style={{padding:10}}>
     {DATA.organes ?
-        <select>
+        <select onChange={changeText}>
           {DATA.organes.map(org => {
             if (org.textes) {
               return org.textes.map(texte =>
-                <option key={texte.bibard}>{org.text} - {texte.textTitre}</option>
+                <option key={texte.textBibard + texte.textBibardSuffixe} value={texte.textBibard + '|' + texte.textBibardSuffixe + '|' + org.value}>
+                  {org.text} - {texte.textTitre}
+                </option>
               )
             }
             return null

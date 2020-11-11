@@ -4,6 +4,7 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG)
 import requests
+import curlify
 
 app = Flask('app')
 CORS(app)
@@ -12,11 +13,17 @@ CORS(app)
 def proxy(url):
     print(request.args)
     url += '?'
-    for arg in request.args:
-        for val in request.args.getlist(arg):
-            url += '&' + arg + '=' + val
-    print(url)            
-    r = requests.get(url)
-    return r.text
+    if 'prochainADiscuter' not in url:
+        for arg in request.args:
+            for val in request.args.getlist(arg):
+                url += '&' + arg + '=' + val
+    cookies = {
+        'FOSUSED_BIBARD': request.args.get('bibard', ''),
+        'FOSUSED_BIBARD_SUFFIXE': request.args.get('bibardSuffixe', ''),
+        'FOSUSED_ORGANE': request.args.get('organeAbrv', ''),
+    }
+    r = requests.get(url, cookies=cookies)
+    print(curlify.to_curl(r.request))
+    return r.text, r.status_code
 
 app.run(debug=True)
