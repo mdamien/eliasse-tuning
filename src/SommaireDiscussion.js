@@ -1,5 +1,5 @@
 import DATA from './data'
-import {fetch} from './fetch'
+import {fetch, fetchAmendement} from './fetch'
 
 function comparePositions(pos1, pos2) {
    var pos1_0 = parseInt(pos1.split('/')[0])
@@ -46,7 +46,10 @@ function SommaireDiscussion() {
            <strong>- {div.place}</strong>
            <ul>
              {DATA.amdts_derouleur ? DATA.amdts_derouleur.map(amdt => {
-               var amdt_span = <span>Amdt n°{amdt.numero} de {amdt.auteurLabel} ({amdt.auteurGroupe})</span>
+               var amdt_span = <span onClick={fetchAmendement.bind(null, amdt.numero)}>
+                  Amdt n°{amdt.numero} de {amdt.auteurLabel} 
+                  {amdt.auteurGroupe ? <span> ({amdt.auteurGroupe})</span> : null}
+               </span>
                return (DATA.discussion.divisions[i+1] 
                      && comparePositions(amdt.position, div.position))
                      && comparePositions(DATA.discussion.divisions[i+1].position, amdt.position) ? 

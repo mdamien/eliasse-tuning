@@ -7,16 +7,16 @@ import TexteAmendé from './TexteAmendé';
 import SommaireDiscussion from './SommaireDiscussion';
 
 import DATA from './data'
-import {fetch, fetchPrev, fetchNext} from './fetch'
+import {fetch, fetchAmendement} from './fetch'
 
 function loadPreviousAmendement() {
   console.log('load previous')
-  fetchPrev()
+  fetchAmendement(DATA.amendements[1].numero)
 }
 
 function loadNextAmendement() {
   console.log('load next')
-  fetchNext()
+  fetchAmendement(DATA.amendements[DATA.amendements.length-2].numero)
 }
 
 
@@ -31,7 +31,7 @@ function App() {
         <center><button onClick={loadNextAmendement}>charger l'amendement suivant</button></center>
       </div>
       <div id="text-column">
-        <center><h3>Texte amendé par l'amendement n°{DATA.amendements[0].numero}</h3></center>
+        <center><h3>Texte n°{DATA.discussion.bibard} amendé par l'amendement n°{DATA.amendements[0].numero}</h3></center>
         <hr/>
         <TexteAmendé/>
       </div>
