@@ -1,6 +1,7 @@
 import DATA from './data'
-import {fetch, fetchAmendement} from './fetch'
+import {fetchAmendement} from './fetch'
 import {currAmdtIndex} from './utils'
+import { useEffect, useRef } from 'react';
 
 function comparePositions(pos1, pos2) {
    var pos1_0 = parseInt(pos1.split('/')[0])
@@ -17,30 +18,15 @@ function comparePositions(pos1, pos2) {
    return false
 }
 
-function changeText(event) {
-  DATA.currentText = event.target.value
-  fetch()
-}
-
 function SommaireDiscussion() {
+  const selectedAmdtRef = useRef();
+
+  useEffect(() => {
+    selectedAmdtRef.current.scrollIntoView()
+  }, [selectedAmdtRef]);
+
   return (
    <div style={{padding:10}}>
-    {DATA.organes ?
-        <select onChange={changeText}>
-          {DATA.organes.map(org => {
-            if (org.textes) {
-              return org.textes.map(texte =>
-                <option key={texte.textBibard + texte.textBibardSuffixe} value={texte.textBibard + '|' + texte.textBibardSuffixe + '|' + org.value}>
-                  {org.text} - {texte.textTitre} ({texte.textBibard})
-                </option>
-              )
-            }
-            return null
-          })}
-        </select>
-    : null}
-    <br/>
-    <br/>
     <ul>
       {DATA.discussion ? DATA.discussion.divisions.map((div, i) => <div key={div.position}>
         <li>
@@ -59,7 +45,7 @@ function SommaireDiscussion() {
                      && comparePositions(DATA.discussion.divisions[i+1].position, amdt.position) ? 
                   <li key={amdt.numero}>
                     {DATA.amendements[currAmdtIndex()].numero === amdt.numero ?
-                      <u>{amdt_span}</u>
+                      <u ref={selectedAmdtRef}>{amdt_span}</u>
                     : amdt_span
                     }
                   </li>

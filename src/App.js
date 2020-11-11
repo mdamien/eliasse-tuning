@@ -24,10 +24,31 @@ function toggleSuiviAuto() {
   render()
 }
 
+function changeText(event) {
+  DATA.currentText = event.target.value
+  fetch()
+}
 
 function App() {
   return (
     <div id="app">
+      <div id="title">
+        <div style={{float:'left', height: '30px', display: 'flex', marginLeft: 20}}><span style={{margin: 'auto'}}>Dérouleur d'amendements</span></div>
+        {DATA.organes ?
+            <select onChange={changeText}>
+              {DATA.organes.map(org => {
+                if (org.textes) {
+                  return org.textes.map(texte =>
+                    <option key={texte.textBibard + texte.textBibardSuffixe} value={texte.textBibard + '|' + texte.textBibardSuffixe + '|' + org.value}>
+                      {org.text} - {texte.textTitre} ({texte.textBibard})
+                    </option>
+                  )
+                }
+                return null
+              })}
+            </select>
+        : null}
+      </div>
       <div id="left-column">
         <center>
           {currAmdtIndex() > 0 ? <button onClick={loadPreviousAmendement} title="Amendement précédent">⬅️</button> : null}
