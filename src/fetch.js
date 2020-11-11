@@ -21,9 +21,11 @@ function fetch() {
         organeAbrv: organeAbrv,
     }, function(data) {
         DATA.prochainADiscuter = data['prochainADiscuter']
-        bibard = DATA.prochainADiscuter.bibard
-        bibardSuffixe = DATA.prochainADiscuter.bibardSuffixe
-        organeAbrv = DATA.prochainADiscuter.organeAbrv
+        if (!DATA.currentText) {
+            bibard = DATA.prochainADiscuter.bibard
+            bibardSuffixe = DATA.prochainADiscuter.bibardSuffixe
+            organeAbrv = DATA.prochainADiscuter.organeAbrv
+        }
         $.getJSON(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/discussion.do', {
             legislature: DATA.prochainADiscuter.legislature,
             bibard: bibard,
