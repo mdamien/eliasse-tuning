@@ -30,9 +30,9 @@ function App() {
     <div id="app">
       <div id="left-column">
         <center>
-          <button onClick={loadPreviousAmendement} title="Amendement précédent">⬅️</button>
+          {currAmdtIndex() > 0 ? <button onClick={loadPreviousAmendement} title="Amendement précédent">⬅️</button> : null}
           <button onClick={toggleSuiviAuto} title="Suivi automatique">{DATA.suiviAuto ? '⏸️': '▶️'}</button>
-          <button onClick={loadNextAmendement} title="Amendement suivant">➡️</button>
+          {DATA.amendements.length-1 > currAmdtIndex()+1 ? <button onClick={loadNextAmendement} title="Amendement suivant">➡️</button> : null}
           </center>
         <Amendement data={DATA.amendements[currAmdtIndex()]}/>
       </div>
