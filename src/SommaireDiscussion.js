@@ -45,12 +45,13 @@ function SommaireDiscussion() {
         <li>
            <strong>- {div.place}</strong>
            <ul>
-             {DATA.amdts_derouleur ? DATA.amdts_derouleur.map(amdt => {
-               var amdt_span = <span onClick={fetchAmendement.bind(null, amdt.numero)}>
+             {DATA.amdts_derouleur ? DATA.amdts_derouleur.map((amdt, j) => {
+              console.log(DATA.amdts_derouleur, j)
+               var amdt_span = <span onClick={fetchAmendement.bind(null, DATA.amdts_derouleur[(j+2 < DATA.amdts_derouleur.length) ? j+2 : j].numero)}>
                   Amdt n°{amdt.numero} de {amdt.auteurLabel} 
                   {amdt.auteurGroupe ? <span> ({amdt.auteurGroupe})</span> : null}
                </span>
-               if (DATA.prochainADiscuter.numAmdt == amdt.numero) {
+               if (DATA.prochainADiscuter.numAmdt === amdt.numero) {
                 amdt_span = <strong>{amdt_span} (en discussion)</strong>
                }
                return (DATA.discussion.divisions[i+1] 
