@@ -1,9 +1,11 @@
 import render from './App'
 import DATA from './data'
 
+var PROXY = "http://167.99.240.236:8004/p/"
+
 function fetch() {
     var $ = Window.$
-    var proxy = "http://127.0.0.1:5000/p/"
+    var proxy = PROXY
 
     var bibard = ""
     var bibardSuffixe = ""
@@ -85,7 +87,7 @@ function fetch() {
 
 function fetchAmendement(num) {
     var $ = Window.$
-    var proxy = "http://127.0.0.1:5000/p/"
+    var proxy = PROXY
 
     var bibard = ""
     var bibardSuffixe = ""

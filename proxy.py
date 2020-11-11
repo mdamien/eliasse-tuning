@@ -26,4 +26,4 @@ def proxy(url):
     print(curlify.to_curl(r.request))
     return r.text, r.status_code
 
-app.run(debug=True)
+app.run(debug=True, host="0.0.0.0", port="8004")
