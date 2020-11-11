@@ -23,9 +23,9 @@ function App() {
     <div id="app">
       <div id="left-column">
         <center>
-          <button onClick={loadPreviousAmendement} title="Amendement précédent">{"⬅️"}</button>
-          <button onClick={loadNextAmendement} title="Suivi automatique">{"▶️"}</button>
-          <button onClick={loadNextAmendement} title="Amendement suivant">{"➡️"}</button>
+          <button onClick={loadPreviousAmendement} title="Amendement précédent">⬅️</button>
+          <button title="Suivi automatique">▶️</button>
+          <button onClick={loadNextAmendement} title="Amendement suivant">➡️</button>
           </center>
         <Amendement key={DATA.amendements[0].numero} data={DATA.amendements[0]}/>
       </div>

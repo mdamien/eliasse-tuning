@@ -64,7 +64,6 @@ function fetch() {
                         DATA.text = data
                         $.getJSON(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/getListeReferenceDesOrganes.do', function(data) {
                             DATA.organes = data
-                            // http://eliasse.assemblee-nationale.fr/eliasse/textesOrdreDuJour.do?_dc=1605026729361&organeAbrv=AN&page=1&start=0&limit=25
                             var n = 0
                             DATA.organes.forEach(function(org, i) {
                                 $.getJSON(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/textesOrdreDuJour.do', {
