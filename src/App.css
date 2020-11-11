@@ -25,22 +25,25 @@
   height: 100%;
   overflow: auto;
   color: white;
+  font-family: sans;
 }
 #discussion-column ul {
 padding: 0;
 list-style: none;
 margin: 0;
 }
-#discussion-column ul ul{
-font-style: italic;
-}
 #discussion-column li {
   background: #5e5e5e;
   padding: 4px;
+  cursor: pointer;
+}
+#discussion-column li li:hover {
+  background: #4e4e4e;
 }
 #discussion-column select {
     color: white;
     max-width: 100%;
+    font-weight: bold;
 }
 .amendement {
   margin: 20px;

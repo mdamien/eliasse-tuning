@@ -41,19 +41,27 @@ function SommaireDiscussion() {
     <br/>
     <br/>
     <ul>
-      {DATA.discussion ? DATA.discussion.divisions.map((div, i) => <li key={div.position}>
-           <strong>{div.place}</strong>
+      {DATA.discussion ? DATA.discussion.divisions.map((div, i) => <div>
+        <li key={div.position}>
+           <strong>- {div.place}</strong>
            <ul>
-             {DATA.amdts_derouleur ? DATA.amdts_derouleur.map(amdt => 
-               (DATA.discussion.divisions[i+1] 
+             {DATA.amdts_derouleur ? DATA.amdts_derouleur.map(amdt => {
+               var amdt_span = <span>Amdt n°{amdt.numero} de {amdt.auteurLabel} ({amdt.auteurGroupe})</span>
+               return (DATA.discussion.divisions[i+1] 
                      && comparePositions(amdt.position, div.position))
                      && comparePositions(DATA.discussion.divisions[i+1].position, amdt.position) ? 
-                  <li key={amdt.numero}>Amdt n°{amdt.numero} de {amdt.auteurLabel} ({amdt.auteurGroupe})</li>
+                  <li key={amdt.numero}>
+                    {DATA.amendements[0].numero === amdt.numero ?
+                      <u>{amdt_span}</u>
+                    : amdt_span
+                    }
+                  </li>
                : null
-             ) : null}
+             }) : null}
            </ul>
-           <hr/>
-         </li>) : null}
+         </li>
+         <br/>
+         </div>) : null}
     </ul>
    </div>
   );
