@@ -39,7 +39,7 @@ function fetch() {
                 + '&bibard=' + bibard
                 + '&bibardSuffixe=' + bibardSuffixe
                 + '&organeAbrv=' + organeAbrv
-            DATA.discussion.amendements.slice(0, 3).forEach(x => {
+            DATA.discussion.amendements.forEach(x => {
                 url += '&numAmdt=' + x.numero
             })
             $.getJSON(proxy + url, function(data) {

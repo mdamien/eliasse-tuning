@@ -30,7 +30,7 @@ function SommaireDiscussion() {
             if (org.textes) {
               return org.textes.map(texte =>
                 <option key={texte.textBibard + texte.textBibardSuffixe} value={texte.textBibard + '|' + texte.textBibardSuffixe + '|' + org.value}>
-                  {org.text} - {texte.textTitre}
+                  {org.text} - {texte.textTitre} ({texte.textBibard})
                 </option>
               )
             }
