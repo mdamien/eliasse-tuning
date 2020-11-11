@@ -10,13 +10,11 @@ import DATA from './data'
 import {fetch, fetchAmendement} from './fetch'
 
 function loadPreviousAmendement() {
-  console.log('load previous')
   fetchAmendement(DATA.amendements[1].numero)
 }
 
 function loadNextAmendement() {
-  console.log('load next')
-  fetchAmendement(DATA.amendements[DATA.amendements.length-2].numero)
+  fetchAmendement(DATA.amendements[3].numero)
 }
 
 
@@ -24,11 +22,12 @@ function App() {
   return (
     <div id="app">
       <div id="left-column">
-        <center><button onClick={loadPreviousAmendement}>charger l'amendement précédent</button></center>
-        {DATA.amendements ? DATA.amendements.map(amdt => 
-          <Amendement key={amdt.numero} data={amdt}/>
-          ) : null}
-        <center><button onClick={loadNextAmendement}>charger l'amendement suivant</button></center>
+        <center>
+          <button onClick={loadPreviousAmendement} title="Amendement précédent">{"⬅️"}</button>
+          <button onClick={loadNextAmendement} title="Suivi automatique">{"▶️"}</button>
+          <button onClick={loadNextAmendement} title="Amendement suivant">{"➡️"}</button>
+          </center>
+        <Amendement key={DATA.amendements[0].numero} data={DATA.amendements[0]}/>
       </div>
       <div id="text-column">
         <center><h3>Texte n°{DATA.discussion.bibard} amendé par l'amendement n°{DATA.amendements[0].numero}</h3></center>
