@@ -17,6 +17,8 @@ function App() {
           ) : null}
       </div>
       <div id="text-column">
+        <center><h3>Texte amendé par l'amendement n°{DATA.amendements[0].numero}</h3></center>
+        <hr/>
         <TexteAmendé/>
       </div>
       <div id="discussion-column">

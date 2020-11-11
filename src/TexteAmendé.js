@@ -19,14 +19,14 @@ function TexteAmendé() {
    }
    if (inside_style) {
       if (l.indexOf(',') !== -1 || l.indexOf('{')  !== -1) {
-         l = '#text-column ' + l
+         l = '#texte ' + l
       }
    }
    return l
   }).join('\n')
   return (
     <div style={{padding:10}}>
-      <div dangerouslySetInnerHTML={{__html: html}} />
+      <div id="texte" dangerouslySetInnerHTML={{__html: html}} />
     </div>
   );
 }
