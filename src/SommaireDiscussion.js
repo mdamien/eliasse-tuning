@@ -33,7 +33,7 @@ function SommaireDiscussion() {
            <strong>- {div.place}</strong>
            <ul>
              {DATA.amdts_derouleur ? DATA.amdts_derouleur.map(amdt => {
-               var amdt_span = <span onClick={fetchAmendement.bind(null, amdt.numero)}>
+               var amdt_span = <span>
                   Amdt n°{amdt.numero} de {amdt.auteurLabel} 
                   {amdt.auteurGroupe ? <span> ({amdt.auteurGroupe})</span> : null}
                </span>
@@ -43,7 +43,7 @@ function SommaireDiscussion() {
                return (DATA.discussion.divisions[i+1] 
                      && comparePositions(amdt.position, div.position))
                      && comparePositions(DATA.discussion.divisions[i+1].position, amdt.position) ? 
-                  <li key={amdt.numero}>
+                  <li onClick={fetchAmendement.bind(null, amdt.numero)} key={amdt.numero}>
                     {DATA.amendements[currAmdtIndex()].numero === amdt.numero ?
                       <u ref={selectedAmdtRef}>{amdt_span}</u>
                     : amdt_span
