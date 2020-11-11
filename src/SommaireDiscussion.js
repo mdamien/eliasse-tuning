@@ -1,5 +1,5 @@
 import DATA from './data'
-import fetch from './fetch'
+import {fetch} from './fetch'
 
 function comparePositions(pos1, pos2) {
    var pos1_0 = parseInt(pos1.split('/')[0])
@@ -41,8 +41,8 @@ function SommaireDiscussion() {
     <br/>
     <br/>
     <ul>
-      {DATA.discussion ? DATA.discussion.divisions.map((div, i) => <div>
-        <li key={div.position}>
+      {DATA.discussion ? DATA.discussion.divisions.map((div, i) => <div key={div.position}>
+        <li>
            <strong>- {div.place}</strong>
            <ul>
              {DATA.amdts_derouleur ? DATA.amdts_derouleur.map(amdt => {

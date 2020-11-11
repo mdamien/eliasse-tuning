@@ -83,4 +83,104 @@ function fetch() {
     })
 }
 
-export default fetch
+
+function fetchPrev() {
+    var $ = Window.$
+    var proxy = "http://127.0.0.1:5000/p/"
+
+    var bibard = ""
+    var bibardSuffixe = ""
+    var organeAbrv = ""
+
+    if (DATA.currentText) {
+        bibard = DATA.currentText.split('|')[0]
+        bibardSuffixe = DATA.currentText.split('|')[1]
+        organeAbrv = DATA.currentText.split('|')[2]
+    }
+
+    $.getJSON(proxy + "http://eliasse.assemblee-nationale.fr/eliasse/prochainADiscuter.do", {
+        bibard: bibard,
+        bibardSuffixe: bibardSuffixe,
+        organeAbrv: organeAbrv,
+    }, function(data) {
+        DATA.prochainADiscuter = data['prochainADiscuter']
+        if (!DATA.currentText) {
+            bibard = DATA.prochainADiscuter.bibard
+            bibardSuffixe = DATA.prochainADiscuter.bibardSuffixe
+            organeAbrv = DATA.prochainADiscuter.organeAbrv
+        }
+        $.getJSON(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/discussion.do', {
+            legislature: DATA.prochainADiscuter.legislature,
+            bibard: bibard,
+            bibardSuffixe: bibardSuffixe,
+            organeAbrv: organeAbrv,
+            numAmdt: DATA.amendements[0].numero,
+        }, function(data) {
+            DATA.discussion = data.amdtsParOrdreDeDiscussion
+            var url = 'http://eliasse.assemblee-nationale.fr/eliasse/amendement.do'
+                + '?legislature=' + DATA.prochainADiscuter.legislature 
+                + '&bibard=' + bibard
+                + '&bibardSuffixe=' + bibardSuffixe
+                + '&organeAbrv=' + organeAbrv
+            DATA.discussion.amendements.forEach(x => {
+                url += '&numAmdt=' + x.numero
+            })
+            $.getJSON(proxy + url, function(data) {
+                DATA.amendements = data.amendements
+                render()
+            })
+        })
+    })
+}
+
+
+function fetchNext() {
+    var $ = Window.$
+    var proxy = "http://127.0.0.1:5000/p/"
+
+    var bibard = ""
+    var bibardSuffixe = ""
+    var organeAbrv = ""
+
+    if (DATA.currentText) {
+        bibard = DATA.currentText.split('|')[0]
+        bibardSuffixe = DATA.currentText.split('|')[1]
+        organeAbrv = DATA.currentText.split('|')[2]
+    }
+
+    $.getJSON(proxy + "http://eliasse.assemblee-nationale.fr/eliasse/prochainADiscuter.do", {
+        bibard: bibard,
+        bibardSuffixe: bibardSuffixe,
+        organeAbrv: organeAbrv,
+    }, function(data) {
+        DATA.prochainADiscuter = data['prochainADiscuter']
+        if (!DATA.currentText) {
+            bibard = DATA.prochainADiscuter.bibard
+            bibardSuffixe = DATA.prochainADiscuter.bibardSuffixe
+            organeAbrv = DATA.prochainADiscuter.organeAbrv
+        }
+        $.getJSON(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/discussion.do', {
+            legislature: DATA.prochainADiscuter.legislature,
+            bibard: bibard,
+            bibardSuffixe: bibardSuffixe,
+            organeAbrv: organeAbrv,
+            numAmdt: DATA.amendements[DATA.amendements.length-1].numero,
+        }, function(data) {
+            DATA.discussion = data.amdtsParOrdreDeDiscussion
+            var url = 'http://eliasse.assemblee-nationale.fr/eliasse/amendement.do'
+                + '?legislature=' + DATA.prochainADiscuter.legislature 
+                + '&bibard=' + bibard
+                + '&bibardSuffixe=' + bibardSuffixe
+                + '&organeAbrv=' + organeAbrv
+            DATA.discussion.amendements.forEach(x => {
+                url += '&numAmdt=' + x.numero
+            })
+            $.getJSON(proxy + url, function(data) {
+                DATA.amendements = data.amendements
+                render()
+            })
+        })
+    })
+}
+
+export {fetchPrev, fetchNext, fetch}
