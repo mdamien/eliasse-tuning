@@ -50,6 +50,9 @@ function SommaireDiscussion() {
                   Amdt n°{amdt.numero} de {amdt.auteurLabel} 
                   {amdt.auteurGroupe ? <span> ({amdt.auteurGroupe})</span> : null}
                </span>
+               if (DATA.prochainADiscuter.numAmdt == amdt.numero) {
+                amdt_span = <strong>{amdt_span} (en discussion)</strong>
+               }
                return (DATA.discussion.divisions[i+1] 
                      && comparePositions(amdt.position, div.position))
                      && comparePositions(DATA.discussion.divisions[i+1].position, amdt.position) ? 
