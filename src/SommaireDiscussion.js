@@ -1,5 +1,6 @@
 import DATA from './data'
 import {fetch, fetchAmendement} from './fetch'
+import {currAmdtIndex} from './utils'
 
 function comparePositions(pos1, pos2) {
    var pos1_0 = parseInt(pos1.split('/')[0])
@@ -57,7 +58,7 @@ function SommaireDiscussion() {
                      && comparePositions(amdt.position, div.position))
                      && comparePositions(DATA.discussion.divisions[i+1].position, amdt.position) ? 
                   <li key={amdt.numero}>
-                    {DATA.amendements[2].numero === amdt.numero ?
+                    {DATA.amendements[currAmdtIndex()].numero === amdt.numero ?
                       <u>{amdt_span}</u>
                     : amdt_span
                     }

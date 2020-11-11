@@ -1,5 +1,6 @@
 import render from './App'
 import DATA from './data'
+import {currAmdtIndex} from './utils'
 
 var PROXY = "http://167.99.240.236:8004/p/"
 
@@ -51,17 +52,17 @@ function fetch() {
                     bibard: bibard,
                     bibardSuffixe: bibardSuffixe,
                     organeAbrv: organeAbrv,
-                    position: DATA.amendements[2].position,
+                    position: DATA.amendements[currAmdtIndex()].position,
                 }, function(data) {
                     DATA.amdts_derouleur = data
                     $.get(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/loadTextContentByBibard.do', {
                         legislature: DATA.prochainADiscuter.legislature,
                         bibard: bibard,
                         bibardSuffixe: bibardSuffixe,
-                        ancreDivision: DATA.amendements[2].ancreDivisionTexteVise,
+                        ancreDivision: DATA.amendements[currAmdtIndex()].ancreDivisionTexteVise,
                         isSousAmdt: "false", // how to know this ???
                     }, function(data) {
-                        DATA.text = data
+                        DATA.text = Window.html_beautify(data)
                         $.getJSON(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/getListeReferenceDesOrganes.do', function(data) {
                             DATA.organes = data
                             var n = 0
@@ -132,17 +133,17 @@ function fetchAmendement(num) {
                     bibard: bibard,
                     bibardSuffixe: bibardSuffixe,
                     organeAbrv: organeAbrv,
-                    position: DATA.amendements[0].position,
+                    position: DATA.amendements[currAmdtIndex()].position,
                 }, function(data) {
                     DATA.amdts_derouleur = data
                     $.get(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/loadTextContentByBibard.do', {
                         legislature: DATA.prochainADiscuter.legislature,
                         bibard: bibard,
                         bibardSuffixe: bibardSuffixe,
-                        ancreDivision: DATA.amendements[0].ancreDivisionTexteVise,
+                        ancreDivision: DATA.amendements[currAmdtIndex()].ancreDivisionTexteVise,
                         isSousAmdt: "false", // how to know this ???
                     }, function(data) {
-                        DATA.text = data
+                        DATA.text = Window.html_beautify(data)
                         render()
                     })
                 })
@@ -151,4 +152,36 @@ function fetchAmendement(num) {
     })
 }
 
-export {fetchAmendement, fetch}
+function fetchSuiviAuto() {
+    if (!DATA.suiviAuto) {
+        return
+    }
+    var $ = Window.$
+    var proxy = PROXY
+
+    var bibard = ""
+    var bibardSuffixe = ""
+    var organeAbrv = ""
+
+    if (DATA.currentText) {
+        bibard = DATA.currentText.split('|')[0]
+        bibardSuffixe = DATA.currentText.split('|')[1]
+        organeAbrv = DATA.currentText.split('|')[2]
+    }
+
+    $.getJSON(proxy + "http://eliasse.assemblee-nationale.fr/eliasse/prochainADiscuter.do", {
+        bibard: bibard,
+        bibardSuffixe: bibardSuffixe,
+        organeAbrv: organeAbrv,
+    }, function(data) {
+        if (DATA.prochainADiscuter) {
+            if (data['prochainADiscuter'].numAmdt !== DATA.prochainADiscuter.numAmdt) {
+                fetchAmendement(DATA.prochainADiscuter.numAmdt)
+                DATA.prochainADiscuter = data['prochainADiscuter']
+            }
+        }
+        setTimeout(fetchSuiviAuto, 1000)
+    })
+}
+
+export {fetchAmendement, fetch, fetchSuiviAuto}

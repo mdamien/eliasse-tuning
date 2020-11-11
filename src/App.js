@@ -5,16 +5,23 @@ import './App.css';
 import Amendement from './Amendement';
 import TexteAmendé from './TexteAmendé';
 import SommaireDiscussion from './SommaireDiscussion';
-
 import DATA from './data'
-import {fetch, fetchAmendement} from './fetch'
+import {fetch, fetchAmendement, fetchSuiviAuto} from './fetch'
+import {currAmdtIndex} from './utils'
+
 
 function loadPreviousAmendement() {
-  fetchAmendement(DATA.amendements[1].numero)
+  fetchAmendement(DATA.amendements[currAmdtIndex()-1].numero)
 }
 
 function loadNextAmendement() {
-  fetchAmendement(DATA.amendements[3].numero)
+  fetchAmendement(DATA.amendements[currAmdtIndex()+1].numero)
+}
+
+function toggleSuiviAuto() {
+  DATA.suiviAuto = !DATA.suiviAuto
+  fetchSuiviAuto()
+  render()
 }
 
 
@@ -24,13 +31,13 @@ function App() {
       <div id="left-column">
         <center>
           <button onClick={loadPreviousAmendement} title="Amendement précédent">⬅️</button>
-          <button title="Suivi automatique">▶️</button>
+          <button onClick={toggleSuiviAuto} title="Suivi automatique">{DATA.suiviAuto ? '⏸️': '▶️'}</button>
           <button onClick={loadNextAmendement} title="Amendement suivant">➡️</button>
           </center>
-        <Amendement data={DATA.amendements[2]}/>
+        <Amendement data={DATA.amendements[currAmdtIndex()]}/>
       </div>
       <div id="text-column">
-        <center><h3>Texte n°{DATA.discussion.bibard} amendé par l'amendement n°{DATA.amendements[2].numero}</h3></center>
+        <center><h3>Texte n°{DATA.discussion.bibard} amendé par l'amendement n°{DATA.amendements[currAmdtIndex()].numero}</h3></center>
         <hr/>
         <TexteAmendé/>
       </div>
@@ -42,7 +49,6 @@ function App() {
 }
 
 function render() {
-  console.log(DATA)
   ReactDOM.render(
     <React.StrictMode>
       <App />

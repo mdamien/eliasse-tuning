@@ -5,12 +5,9 @@ function TexteAmendé() {
   if (DATA.text) {
    html = DATA.text
   }
-  html = Window.html_beautify(html)
 
   var inside_style = false;
   html = html.split('\n').map(l => {
-   if (l.indexOf('<style') !== -1) {
-   }
    if (l.indexOf('<style') !== -1) {
       inside_style = true;
    }
