@@ -45,13 +45,9 @@ list-style: none;
 margin: 0;
 }
 #discussion-column li {
-  background: #5e5e5e;
-  padding: 4px;
-}
-#discussion-column li li {
   cursor: pointer;
 }
-#discussion-column li li:hover {
+#discussion-column li:hover {
   background: #4e4e4e;
 }
 #title select {
