@@ -29,7 +29,9 @@ function SommaireDiscussion() {
   const selectedAmdtRef = useRef();
 
   useEffect(() => {
-    selectedAmdtRef.current.scrollIntoView()
+    if (selectedAmdtRef.current) {
+      selectedAmdtRef.current.scrollIntoView()
+    }
   }, [selectedAmdtRef]);
 
   return (
