@@ -11,10 +11,14 @@ import {currAmdtIndex} from './utils'
 
 
 function loadPreviousAmendement() {
+  DATA.suiviAuto = false
+  render()
   fetchAmendement(DATA.amendements[currAmdtIndex()-1].numero)
 }
 
 function loadNextAmendement() {
+  DATA.suiviAuto = false
+  render()
   fetchAmendement(DATA.amendements[currAmdtIndex()+1].numero)
 }
 
@@ -51,9 +55,9 @@ function App() {
       </div>
       <div id="left-column">
         <center>
-          {currAmdtIndex() > 0 ? <button onClick={loadPreviousAmendement} title="Amendement précédent">⬅️</button> : null}
-          <button onClick={toggleSuiviAuto} title="Suivi automatique">{DATA.suiviAuto ? '⏸️': '▶️'}</button>
-          {DATA.amendements.length-1 > currAmdtIndex()+1 ? <button onClick={loadNextAmendement} title="Amendement suivant">➡️</button> : null}
+          {currAmdtIndex() > 0 ? <button onClick={loadPreviousAmendement} title="Amendement précédent">⬅️ Précédent</button> : null}
+          <button onClick={toggleSuiviAuto} title="Suivi automatique">{DATA.suiviAuto ? 'Désactiver le suivi automatique ⏸️': 'Activer le suivi automatique ▶️'}</button>
+          {DATA.amendements.length-1 > currAmdtIndex()+1 ? <button onClick={loadNextAmendement} title="Amendement suivant">Suivant ➡️</button> : null}
           </center>
         <Amendement data={DATA.amendements[currAmdtIndex()]}/>
       </div>

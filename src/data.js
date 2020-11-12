@@ -1,5 +1,5 @@
 var data = {
-    suiviAuto: false,
+    suiviAuto: true,
 }
 
 export default data;

@@ -175,7 +175,7 @@ function fetchSuiviAuto() {
         organeAbrv: organeAbrv,
     }, function(data) {
         DATA.prochainADiscuter = data['prochainADiscuter']
-        if (DATA.amendements[currAmdtIndex()].numero !== DATA.prochainADiscuter.numAmdt) {
+        if (DATA.amendements && DATA.amendements[currAmdtIndex()].numero !== DATA.prochainADiscuter.numAmdt) {
             fetchAmendement(DATA.prochainADiscuter.numAmdt)
         }
         setTimeout(fetchSuiviAuto, 1000)
