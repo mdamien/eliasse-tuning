@@ -174,11 +174,9 @@ function fetchSuiviAuto() {
         bibardSuffixe: bibardSuffixe,
         organeAbrv: organeAbrv,
     }, function(data) {
-        if (DATA.prochainADiscuter) {
-            if (data['prochainADiscuter'].numAmdt !== DATA.prochainADiscuter.numAmdt) {
-                fetchAmendement(DATA.prochainADiscuter.numAmdt)
-                DATA.prochainADiscuter = data['prochainADiscuter']
-            }
+        DATA.prochainADiscuter = data['prochainADiscuter']
+        if (DATA.amendements[currAmdtIndex()].numero !== DATA.prochainADiscuter.numAmdt) {
+            fetchAmendement(DATA.prochainADiscuter.numAmdt)
         }
         setTimeout(fetchSuiviAuto, 1000)
     })
