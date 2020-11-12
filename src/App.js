@@ -28,6 +28,11 @@ function toggleSuiviAuto() {
   render()
 }
 
+function toggleAfficherTexteAmendé() {
+  DATA.afficherTexteAmendé = !DATA.afficherTexteAmendé
+  render()
+}
+
 function changeText(event) {
   DATA.currentText = event.target.value
   fetch()
@@ -53,19 +58,24 @@ function App() {
             </select>
         : null}
       </div>
-      <div id="left-column">
+      <div id="left-column" className={DATA.afficherTexteAmendé ? '' : 'full'}>
+        <div style={{float: 'right'}}>
+          <button onClick={toggleAfficherTexteAmendé}>
+            {DATA.afficherTexteAmendé ? 'Cacher' : 'Afficher'} le texte amendé
+          </button>
+        </div>
         <center>
           {currAmdtIndex() > 0 ? <button onClick={loadPreviousAmendement} title="Amendement précédent">⬅️ Précédent</button> : null}
           <button onClick={toggleSuiviAuto} title="Suivi automatique">{DATA.suiviAuto ? 'Désactiver le suivi automatique ⏸️': 'Activer le suivi automatique ▶️'}</button>
           {DATA.amendements.length-1 > currAmdtIndex()+1 ? <button onClick={loadNextAmendement} title="Amendement suivant">Suivant ➡️</button> : null}
-          </center>
+        </center>
         <Amendement data={DATA.amendements[currAmdtIndex()]}/>
       </div>
-      <div id="text-column">
-        <center><h3>Texte n°{DATA.discussion.bibard} amendé par l'amendement n°{DATA.amendements[currAmdtIndex()].numero}</h3></center>
-        <hr/>
-        <TexteAmendé/>
-      </div>
+      {DATA.afficherTexteAmendé ?
+        <div id="text-column">
+          <TexteAmendé/>
+        </div>
+        : null }
       <div id="discussion-column">
         <SommaireDiscussion/>
       </div>

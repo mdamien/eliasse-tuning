@@ -2,6 +2,7 @@ import DATA from './data'
 import {fetchAmendement} from './fetch'
 import {currAmdtIndex} from './utils'
 import { useEffect, useRef } from 'react';
+import render from './App';
 
 function comparePositions(pos1, pos2) {
    var pos1_0 = parseInt(pos1.split('/')[0])
@@ -16,6 +17,12 @@ function comparePositions(pos1, pos2) {
       return pos1_0 >= pos2_0
    }
    return false
+}
+
+function selectAmdt(num) {
+  DATA.suiviAuto = false
+  render()
+  fetchAmendement(num)
 }
 
 function SommaireDiscussion() {
@@ -43,7 +50,7 @@ function SommaireDiscussion() {
                return (DATA.discussion.divisions[i+1] 
                      && comparePositions(amdt.position, div.position))
                      && comparePositions(DATA.discussion.divisions[i+1].position, amdt.position) ? 
-                  <li onClick={fetchAmendement.bind(null, amdt.numero)} key={amdt.numero}>
+                  <li onClick={selectAmdt.bind(null, amdt.numero)} key={amdt.numero}>
                     {DATA.amendements[currAmdtIndex()].numero === amdt.numero ?
                       <u ref={selectedAmdtRef}>{amdt_span}</u>
                     : amdt_span

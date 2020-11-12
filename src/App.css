@@ -21,6 +21,9 @@
   height: calc(100% - 30px);
   overflow: auto;
 }
+#left-column.full {
+  width: 80%;
+}
 #text-column {
   float: left;
   width: 30%;
@@ -60,7 +63,7 @@ margin: 0;
   margin: 20px;
   background: white;
   padding: 20px;
-  width: 700px;
+  width: 80%;
   margin-left:auto;
   margin-right:auto;
 }
