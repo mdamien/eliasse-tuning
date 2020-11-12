@@ -76,3 +76,12 @@ margin: 0;
   margin: 10px;
   padding: 5px;
 }
+.amendement .lien-pdf {
+  color: black;
+  float: left;
+}
+.amendement .en-discussion {
+  float: right;
+  border: 1px solid black;
+  padding: 10px;
+}
