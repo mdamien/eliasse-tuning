@@ -46,24 +46,22 @@ function changeText(event) {
 function App() {
   return (
     <div id="app">
-      <div id="title" style={{display: 'flex'}}>
-        <div style={{float:'left', height: '30px', display: 'flex', marginLeft: 20}}>
-          <span style={{margin: 'auto'}}>Dérouleur d'amendements</span>
+      <div id="title">
+        <div className="title-left">
+          <span>Dérouleur d'amendements</span>
         </div>
-        <span style={{marginTop:'auto', marginBottom: 'auto'}}>
-          <button onClick={toggleSuiviAuto} title="Suivi automatique">{DATA.suiviAuto ? 'Désactiver le suivi automatique': 'Activer le suivi automatique'}</button>
-          <button onClick={toggleAfficherTexteAmendé}>
-            {DATA.afficherTexteAmendé ? 'Cacher' : 'Afficher'} le texte amendé
-          </button>
-          <button onClick={toggleAfficherDerouleur}>
-            {DATA.afficherDerouleur ? 'Cacher' : 'Afficher'} le prévisionnel
+        <span className="title-middle">
+          <button onClick={toggleSuiviAuto}>
+            {DATA.suiviAuto ? 'Désactiver le suivi automatique': 'Activer le suivi automatique'}
           </button>
           {DATA.organes ?
               <select onChange={changeText}>
                 {DATA.organes.map(org => {
                   if (org.textes) {
                     return org.textes.map(texte =>
-                      <option key={texte.textBibard + texte.textBibardSuffixe} value={texte.textBibard + '|' + texte.textBibardSuffixe + '|' + org.value}>
+                      <option
+                        key={texte.textBibard + texte.textBibardSuffixe}
+                        value={texte.textBibard + '|' + texte.textBibardSuffixe + '|' + org.value}>
                         {org.text} - {texte.textTitre} ({texte.textBibard})
                       </option>
                     )
@@ -72,6 +70,16 @@ function App() {
                 })}
               </select>
           : null}
+        </span>
+        <span className="title-right">
+          <span>
+            <button onClick={toggleAfficherTexteAmendé}>
+              {DATA.afficherTexteAmendé ? 'Cacher' : 'Afficher'} le texte amendé
+            </button>
+            <button onClick={toggleAfficherDerouleur}>
+              {DATA.afficherDerouleur ? 'Cacher' : 'Afficher'} le prévisionnel
+            </button>
+          </span>
         </span>
       </div>
       <div id="left-column" className={

@@ -13,6 +13,8 @@
   background: black;
   color: white;
   font-family: sans;
+  display: flex;
+  justify-content: space-between;
 }
 #left-column {
   float: left;
@@ -64,6 +66,27 @@ margin: 0;
 #title button {
   background: white;
   margin: 0 10px;
+}
+.title-left {
+  float: left;
+  height: 30px;
+  display: flex;
+  margin-left: 20px;
+}
+.title-left > span {
+  margin: auto;
+}
+.title-middle {
+  margin: auto;
+}
+.title-right {
+  float: right;
+  display: flex;
+  justify-content: space-between;
+}
+.title-right {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .amendement {
   margin: 20px;
