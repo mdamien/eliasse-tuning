@@ -21,8 +21,14 @@
   height: calc(100% - 30px);
   overflow: auto;
 }
-#left-column.full {
+#left-column.no-text-column {
   width: 80%;
+}
+#left-column.no-discussion-column {
+  width: 70%;
+}
+#left-column.no-text-column.no-discussion-column {
+  width: 100%;
 }
 #text-column {
   float: left;
@@ -55,6 +61,10 @@ margin: 0;
     max-width: 400px;
     font-weight: bold;
 }
+#title button {
+  background: white;
+  margin: 0 10px;
+}
 .amendement {
   margin: 20px;
   background: white;
@@ -62,6 +72,7 @@ margin: 0;
   width: 80%;
   margin-left:auto;
   margin-right:auto;
+  position: relative;
 }
 .amendement .dispositif div {
   padding: 0 !important;
@@ -74,10 +85,17 @@ margin: 0;
 }
 .amendement .lien-pdf {
   color: black;
-  float: left;
+  position: absolute;
+  left: 10px;
+  top: 10px;
 }
 .amendement .en-discussion {
-  float: right;
   border: 1px solid black;
   padding: 10px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.amendement .header * {
+  margin: 0;
 }
