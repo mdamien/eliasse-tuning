@@ -55,7 +55,7 @@ function App() {
             {DATA.suiviAuto ? 'Désactiver le suivi automatique': 'Activer le suivi automatique'}
           </button>
           {DATA.organes ?
-              <select onChange={changeText}>
+              <select onChange={changeText} value={DATA.currentText}>
                 {DATA.organes.map(org => {
                   if (org.textes) {
                     return org.textes.map(texte =>
