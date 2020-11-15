@@ -20,7 +20,7 @@
   float: left;
   width: 50%;
   background: whitesmoke;
-  height: calc(100% - 30px);
+  height: calc(100% - 60px);
   overflow: auto;
 }
 #left-column.no-text-column {
@@ -35,14 +35,14 @@
 #text-column {
   float: left;
   width: 30%;
-  height: calc(100% - 30px);
+  height: calc(100% - 60px);
   overflow: auto;
 }
 #discussion-column {
   float: left;
   width: 20%;
   background: #404040;
-  height: calc(100% - 30px);
+  height: calc(100% - 60px);
   overflow: auto;
   color: white;
   font-family: sans;
