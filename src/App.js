@@ -44,6 +44,12 @@ function changeText(event) {
 }
 
 function App() {
+  var linkLaFab = ''
+  if (DATA.doslegLink) {
+    linkLaFab = DATA.doslegLink.split('/')
+    linkLaFab = linkLaFab[linkLaFab.length-1]
+    linkLaFab = "https://www.lafabriquedelaloi.fr/articles.html?loi=" + linkLaFab
+  }
   return (
     <div id="app">
       <div id="title">
@@ -70,6 +76,8 @@ function App() {
                 })}
               </select>
           : null}
+          {DATA.doslegLink ? <a href={DATA.doslegLink}>dossier législatif</a> : null}
+          {DATA.doslegLink ? <a href={linkLaFab}>dossier sur la fabrique de la loi</a> : null}
         </span>
       </div>
       {DATA.afficherDerouleur ?

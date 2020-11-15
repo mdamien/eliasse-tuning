@@ -75,6 +75,7 @@ function fetch() {
                                     n += 1
                                     if (n === DATA.organes.length - 1) {
                                         render()
+                                        fetchDoslegLink()
                                     }
                                 })
                             })
@@ -212,6 +213,20 @@ function fetchDivision(position) {
         DATA.amdts_derouleur = data
         render()
         fetchAmendement(DATA.amdts_derouleur[0].numero)
+    })
+}
+
+function fetchDoslegLink() {
+    var $ = Window.$
+    var proxy = PROXY
+    $.get(proxy + 'http://www.assemblee-nationale.fr/dyn' + DATA.amendements[0].urlPDF.replace('.pdf', ''),
+        function(data) {
+        var parser = new DOMParser();
+        var html_doc = parser.parseFromString(data, 'text/html');
+        var link = html_doc.querySelector('.mirror-card-header--options--content--item--link').getAttribute("href")
+        link = 'http://www.assemblee-nationale.fr' + link
+        DATA.doslegLink = link
+        render()
     })
 }
 
