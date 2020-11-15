@@ -13,13 +13,13 @@ import {currAmdtIndex} from './utils'
 function loadPreviousAmendement() {
   DATA.suiviAuto = false
   render()
-  fetchAmendement(DATA.amendements[currAmdtIndex()-1].numero)
+  fetchAmendement(DATA.amendements[currAmdtIndex()-1].numeroReference)
 }
 
 function loadNextAmendement() {
   DATA.suiviAuto = false
   render()
-  fetchAmendement(DATA.amendements[currAmdtIndex()+1].numero)
+  fetchAmendement(DATA.amendements[currAmdtIndex()+1].numeroReference)
 }
 
 function toggleSuiviAuto() {
