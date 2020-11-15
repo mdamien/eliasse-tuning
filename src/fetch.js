@@ -117,6 +117,7 @@ function fetchAmendement(num) {
             organeAbrv: organeAbrv,
             numAmdt: num,
         }, function(data) {
+            DATA.currentAmdt = num
             DATA.discussion = data.amdtsParOrdreDeDiscussion
             var url = 'http://eliasse.assemblee-nationale.fr/eliasse/amendement.do'
                 + '?legislature=' + DATA.prochainADiscuter.legislature 
