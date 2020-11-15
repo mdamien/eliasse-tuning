@@ -86,7 +86,7 @@ function App() {
             onClick={loadPreviousAmendement}
             title="Amendement précédent">Précédent
           </button> : null}
-          {DATA.amendements.length-1 > currAmdtIndex()+1 ? <button
+          {DATA.amendements.length > currAmdtIndex()+1 ? <button
             onClick={loadNextAmendement}
             title="Amendement suivant">Suivant
           </button> : null}

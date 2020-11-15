@@ -26,14 +26,6 @@ function selectAmdt(num) {
 }
 
 function SommaireDiscussion() {
-  const selectedAmdtRef = useRef();
-
-  useEffect(() => {
-    if (selectedAmdtRef.current) {
-      selectedAmdtRef.current.scrollIntoView()
-    }
-  });
-
   console.log(DATA)
 
   return (
@@ -54,7 +46,7 @@ function SommaireDiscussion() {
               {DATA.amendements[currAmdtIndex()].numeroLong === amdt.numero
                 || DATA.amendements[currAmdtIndex()].numero === amdt.numero
                 || DATA.amendements[currAmdtIndex()].numeroReference === amdt.numero ?
-                <u ref={selectedAmdtRef}>{amdt_span}</u>
+                <u>{amdt_span}</u>
               : amdt_span
               }
             </li>
