@@ -1,7 +1,7 @@
 var data = {
     suiviAuto: true,
     afficherTexteAmendé: false,
-    afficherDerouleur: false,
+    afficherDerouleur: true,
 }
 
 export default data;

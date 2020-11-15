@@ -76,12 +76,14 @@ function App() {
             <button onClick={toggleAfficherTexteAmendé}>
               {DATA.afficherTexteAmendé ? 'Cacher' : 'Afficher'} le texte amendé
             </button>
-            <button onClick={toggleAfficherDerouleur}>
-              {DATA.afficherDerouleur ? 'Cacher' : 'Afficher'} le prévisionnel
-            </button>
           </span>
         </span>
       </div>
+      {DATA.afficherDerouleur ?
+      <div id="discussion-column">
+        <SommaireDiscussion/>
+      </div>
+      : null}
       <div id="left-column" className={
         (DATA.afficherTexteAmendé ? '': 'no-text-column')
         + (DATA.afficherDerouleur ? '': ' no-discussion-column')
@@ -102,13 +104,7 @@ function App() {
         <div id="text-column">
           <TexteAmendé/>
         </div>
-        : null }
-      {DATA.afficherDerouleur ?
-      <div id="discussion-column">
-        <SommaireDiscussion/>
-      </div>
-      : null}
-    </div>
+        : null }    </div>
   )
 }
 
