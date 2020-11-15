@@ -51,7 +51,9 @@ function SommaireDiscussion() {
           amdt_span = <strong>{amdt_span} - en discussion</strong>
          }
          return <li onClick={selectAmdt.bind(null, amdt.numero)} key={amdt.numero}>
-              {DATA.amendements[currAmdtIndex()].numeroLong === amdt.numero || DATA.amendements[currAmdtIndex()].numero === amdt.numero ?
+              {DATA.amendements[currAmdtIndex()].numeroLong === amdt.numero
+                || DATA.amendements[currAmdtIndex()].numero === amdt.numero
+                || DATA.amendements[currAmdtIndex()].numeroReference === amdt.numero ?
                 <u ref={selectedAmdtRef}>{amdt_span}</u>
               : amdt_span
               }

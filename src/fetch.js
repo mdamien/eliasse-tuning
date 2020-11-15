@@ -177,6 +177,7 @@ function fetchSuiviAuto() {
         DATA.prochainADiscuter = data['prochainADiscuter']
         if (DATA.amendements
             && DATA.amendements[currAmdtIndex()].numero !== DATA.prochainADiscuter.numAmdt
+            && DATA.amendements[currAmdtIndex()].numeroReference !== DATA.prochainADiscuter.numAmdt
             && DATA.amendements[currAmdtIndex()].numeroLong !== DATA.prochainADiscuter.numAmdt) {
             fetchAmendement(DATA.prochainADiscuter.numAmdt)
         }
