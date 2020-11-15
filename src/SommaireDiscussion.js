@@ -31,53 +31,67 @@ function changeDivision(event) {
   fetchDivision(event.target.value)
 }
 
-// TODO: test this
 function groupedByIdentiqueAndDiscussionCommune() {
   var result = []
   var current_group_identique = []
   var current_group_commune = []
-  DATA.amdts_derouleur.forEach(amdt => {
-    if (!amdt.discussionIdentique && !amdt.discussionCommune) {
-      if (current_group_identique.length > 0) {
-        if (current_group_commune.length > 0) {
+
+  function push() {
+    if (current_group_identique.length > 0) {
+      if (current_group_commune.length > 0) {
+        if (current_group_identique.length == 1) {
+          current_group_commune.push(current_group_identique[0])
+        } else {
           current_group_commune.push({
             _type: 'identique',
             amdts: current_group_identique
           })
-          current_group_identique = []
+        }
+        current_group_identique = []
+      } else {
+        if (current_group_identique.length == 1) {
+          result.push(current_group_identique[0])
         } else {
           result.push({
             _type: 'identique',
             amdts: current_group_identique
           })
-          current_group_identique = []
         }
+        current_group_identique = []
       }
-      if (current_group_commune.length > 0) {
-        result.push({
-          _type: 'commune',
-          amdts: current_group_commune,
-        })
-        current_group_commune = []
-      }
+    }
+    if (current_group_commune.length > 0) {
+      result.push({
+        _type: 'commune',
+        amdts: current_group_commune,
+      })
+      current_group_commune = []
+    }
+  }
 
+  DATA.amdts_derouleur.forEach(amdt => {
+    if (!amdt.discussionIdentique && !amdt.discussionCommune) {
+      push()
       result.push(amdt)
       return
     }
     if (amdt.discussionCommune) {
+      // todo consecutive discussion commune
       current_group_commune.push(amdt)
     }
     if (amdt.discussionIdentique) {
+      // todo consecutive identiques
       current_group_identique.push(amdt)
     }
   })
+  push()
   return result
 }
 
 function renderAmdt(amdt) {
    var amdt_span = <span>
-      Amdt n°{amdt.numero} {amdt.auteurLabel == "Gouvernement" ? 'du' : 'de'} {amdt.auteurLabel} 
-      {amdt.auteurGroupe ? <span> ({amdt.auteurGroupe})</span> : null} {amdt.discussionIdentique}
+      {amdt.parentNumero !== 'X' && amdt.parentNumero ? 'Sous-':''}Amdt n°{amdt.numero} {amdt.auteurLabel == "Gouvernement" ? 'du' : 'de'} {amdt.auteurLabel} 
+      {amdt.auteurGroupe ? <span> ({amdt.auteurGroupe})</span> : null}
    </span>
    if (DATA.prochainADiscuter.numAmdt === amdt.numero) {
     amdt_span = <strong>{amdt_span} - en discussion</strong>

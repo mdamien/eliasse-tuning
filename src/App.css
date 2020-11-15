@@ -135,7 +135,7 @@ margin: 0;
   color: black;
   position: absolute;
   left: 10px;
-  top: 10px;
+  bottom: 10px;
 }
 .amendement .en-discussion {
   border: 1px solid black;
