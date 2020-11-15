@@ -31,6 +31,69 @@ function changeDivision(event) {
   fetchDivision(event.target.value)
 }
 
+// TODO: test this
+function groupedByIdentiqueAndDiscussionCommune() {
+  var result = []
+  var current_group_identique = []
+  var current_group_commune = []
+  DATA.amdts_derouleur.forEach(amdt => {
+    if (!amdt.discussionIdentique && !amdt.discussionCommune) {
+      if (current_group_identique.length > 0) {
+        if (current_group_commune.length > 0) {
+          current_group_commune.push({
+            _type: 'identique',
+            amdts: current_group_identique
+          })
+          current_group_identique = []
+        } else {
+          result.push({
+            _type: 'identique',
+            amdts: current_group_identique
+          })
+          current_group_identique = []
+        }
+      }
+      if (current_group_commune.length > 0) {
+        result.push({
+          _type: 'commune',
+          amdts: current_group_commune,
+        })
+        current_group_commune = []
+      }
+
+      result.push(amdt)
+      return
+    }
+    if (amdt.discussionCommune) {
+      current_group_commune.push(amdt)
+    }
+    if (amdt.discussionIdentique) {
+      current_group_identique.push(amdt)
+    }
+  })
+  return result
+}
+
+function renderAmdt(amdt, level) {
+   var amdt_span = <span>
+      {level == 1 ? '-- ': ''}
+      {level == 2 ? '---- ': ''}
+      Amdt n°{amdt.numero} {amdt.auteurLabel == "Gouvernement" ? 'du' : 'de'} {amdt.auteurLabel} 
+      {amdt.auteurGroupe ? <span> ({amdt.auteurGroupe})</span> : null} {amdt.discussionIdentique}
+   </span>
+   if (DATA.prochainADiscuter.numAmdt === amdt.numero) {
+    amdt_span = <strong>{amdt_span} - en discussion</strong>
+   }
+   return <li className="amdt-line" onClick={selectAmdt.bind(null, amdt.numero)} key={amdt.numero}>
+        {DATA.amendements[currAmdtIndex()].numeroLong === amdt.numero
+          || DATA.amendements[currAmdtIndex()].numero === amdt.numero
+          || DATA.amendements[currAmdtIndex()].numeroReference === amdt.numero ?
+          <u>{amdt_span}</u>
+        : amdt_span
+        }
+      </li>
+}
+
 function SommaireDiscussion() {
   console.log(DATA)
 
@@ -46,23 +109,43 @@ function SommaireDiscussion() {
         )}
       </select>
       <ul>
-       {DATA.amdts_derouleur ? DATA.amdts_derouleur.map(amdt => {
-         var amdt_span = <span>
-            Amdt n°{amdt.numero} {amdt.auteurLabel == "Gouvernement" ? 'du' : 'de'} {amdt.auteurLabel} 
-            {amdt.auteurGroupe ? <span> ({amdt.auteurGroupe})</span> : null}
-         </span>
-         if (DATA.prochainADiscuter.numAmdt === amdt.numero) {
-          amdt_span = <strong>{amdt_span} - en discussion</strong>
-         }
-         return <li onClick={selectAmdt.bind(null, amdt.numero)} key={amdt.numero}>
-              {DATA.amendements[currAmdtIndex()].numeroLong === amdt.numero
-                || DATA.amendements[currAmdtIndex()].numero === amdt.numero
-                || DATA.amendements[currAmdtIndex()].numeroReference === amdt.numero ?
-                <u>{amdt_span}</u>
-              : amdt_span
-              }
+       {groupedByIdentiqueAndDiscussionCommune().map(group => {
+          if (!group._type) {
+            return renderAmdt(group, 0)
+          }
+          if (group._type === 'identique') {
+            return <li key={JSON.stringify(group)}>
+              <br/>
+              Identiques:
+              <ul>
+                {group.amdts.map(amdt => renderAmdt(amdt, 1))}
+              </ul>
             </li>
-       }) : null}
+          }
+          if (group._type === 'commune') {
+            return <li key={JSON.stringify(group)}>
+              <br/>
+              Discussion commune:
+              <ul>
+                {group.amdts.map(group => {
+                  if (!group._type) {
+                    return renderAmdt(group, 1)
+                  }
+                  if (group._type === 'identique') {
+                    return <li key={JSON.stringify(group)}>
+                      <br/>
+                      -- Identiques:
+                      <ul>
+                        {group.amdts.map(amdt => renderAmdt(amdt, 2))}
+                      </ul>
+                      <br/>
+                    </li>
+                  }
+                })}
+              </ul>
+            </li>
+          }
+       })}
    </ul>
    </div>
   );
