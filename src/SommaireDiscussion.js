@@ -25,14 +25,32 @@ function selectAmdt(num) {
   fetchAmendement(num)
 }
 
+function hasPrevDivision() {
+  var div = DATA.amdts_derouleur[0].place
+  for (var i = 0; i < DATA.discussion.divisions.length; i++) {
+    if (DATA.discussion.divisions[i].place === div) {
+      return i > 0
+    }
+  }
+}
+
+function hasNextDivision() {
+  var div = DATA.amdts_derouleur[0].place
+  for (var i = 0; i < DATA.discussion.divisions.length; i++) {
+    if (DATA.discussion.divisions[i].place === div) {
+      return i < DATA.discussion.divisions.length - 1
+    }
+  }
+}
+
 function SommaireDiscussion() {
   console.log(DATA)
 
   return (
    <div style={{padding:10}}>
-       <button>prev</button>
+       {hasPrevDivision() ? <button>prev</button> : null}
        {DATA.amdts_derouleur ? DATA.amdts_derouleur[0].place : null}
-       <button>suiv</button>
+       {hasNextDivision() ? <button>suiv</button> : null}
       <ul>
        {DATA.amdts_derouleur ? DATA.amdts_derouleur.map(amdt => {
          var amdt_span = <span>

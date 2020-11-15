@@ -146,6 +146,7 @@ function fetchAmendement(num) {
                     }, function(data) {
                         DATA.text = Window.html_beautify(data)
                         render()
+                        fetchSuiviAuto()
                     })
                 })
             })
