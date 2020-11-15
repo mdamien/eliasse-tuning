@@ -34,6 +34,8 @@ function SommaireDiscussion() {
     }
   });
 
+  console.log(DATA)
+
   return (
    <div style={{padding:10}}>
        <button>prev</button>
@@ -42,7 +44,7 @@ function SommaireDiscussion() {
       <ul>
        {DATA.amdts_derouleur ? DATA.amdts_derouleur.map(amdt => {
          var amdt_span = <span>
-            Amdt n°{amdt.numero} de {amdt.auteurLabel} 
+            Amdt n°{amdt.numero} {amdt.auteurLabel == "Gouvernement" ? 'du' : 'de'} {amdt.auteurLabel} 
             {amdt.auteurGroupe ? <span> ({amdt.auteurGroupe})</span> : null}
          </span>
          if (DATA.prochainADiscuter.numAmdt === amdt.numero) {

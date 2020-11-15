@@ -71,13 +71,6 @@ function App() {
               </select>
           : null}
         </span>
-        <span className="title-right">
-          <span>
-            <button onClick={toggleAfficherTexteAmendé}>
-              {DATA.afficherTexteAmendé ? 'Cacher' : 'Afficher'} le texte amendé
-            </button>
-          </span>
-        </span>
       </div>
       {DATA.afficherDerouleur ?
       <div id="discussion-column">
@@ -97,6 +90,9 @@ function App() {
             onClick={loadNextAmendement}
             title="Amendement suivant">Suivant
           </button> : null}
+          <button onClick={toggleAfficherTexteAmendé}>
+            {DATA.afficherTexteAmendé ? 'Cacher' : 'Afficher'} le texte amendé
+          </button>
         </center>
         <Amendement data={DATA.amendements[currAmdtIndex()]}/>
       </div>
