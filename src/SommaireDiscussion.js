@@ -74,23 +74,20 @@ function groupedByIdentiqueAndDiscussionCommune() {
   return result
 }
 
-function renderAmdt(amdt, level) {
+function renderAmdt(amdt) {
    var amdt_span = <span>
-      {level == 1 ? '-- ': ''}
-      {level == 2 ? '---- ': ''}
       Amdt n°{amdt.numero} {amdt.auteurLabel == "Gouvernement" ? 'du' : 'de'} {amdt.auteurLabel} 
       {amdt.auteurGroupe ? <span> ({amdt.auteurGroupe})</span> : null} {amdt.discussionIdentique}
    </span>
    if (DATA.prochainADiscuter.numAmdt === amdt.numero) {
     amdt_span = <strong>{amdt_span} - en discussion</strong>
    }
-   return <li className="amdt-line" onClick={selectAmdt.bind(null, amdt.numero)} key={amdt.numero}>
-        {DATA.amendements[currAmdtIndex()].numeroLong === amdt.numero
+   var current = DATA.amendements[currAmdtIndex()].numeroLong === amdt.numero
           || DATA.amendements[currAmdtIndex()].numero === amdt.numero
-          || DATA.amendements[currAmdtIndex()].numeroReference === amdt.numero ?
-          <u>{amdt_span}</u>
-        : amdt_span
-        }
+          || DATA.amendements[currAmdtIndex()].numeroReference === amdt.numero
+   return <li className={"amdt-line" + (current ? ' current': '')}
+          onClick={selectAmdt.bind(null, amdt.numero)} key={amdt.numero}>
+        {amdt_span}
       </li>
 }
 
@@ -111,34 +108,30 @@ function SommaireDiscussion() {
       <ul>
        {groupedByIdentiqueAndDiscussionCommune().map(group => {
           if (!group._type) {
-            return renderAmdt(group, 0)
+            return renderAmdt(group)
           }
           if (group._type === 'identique') {
             return <li key={JSON.stringify(group)}>
-              <br/>
-              Identiques:
-              <ul>
-                {group.amdts.map(amdt => renderAmdt(amdt, 1))}
+              <i>Id</i>
+              <ul className="discussion-identique">
+                {group.amdts.map(amdt => renderAmdt(amdt))}
               </ul>
             </li>
           }
           if (group._type === 'commune') {
             return <li key={JSON.stringify(group)}>
-              <br/>
-              Discussion commune:
-              <ul>
+              <i>Dc</i>
+              <ul className="discussion-commune">
                 {group.amdts.map(group => {
                   if (!group._type) {
-                    return renderAmdt(group, 1)
+                    return renderAmdt(group)
                   }
                   if (group._type === 'identique') {
                     return <li key={JSON.stringify(group)}>
-                      <br/>
-                      -- Identiques:
-                      <ul>
-                        {group.amdts.map(amdt => renderAmdt(amdt, 2))}
+                      <i>Id</i>
+                      <ul className="discussion-identique">
+                        {group.amdts.map(amdt => renderAmdt(amdt))}
                       </ul>
-                      <br/>
                     </li>
                   }
                 })}

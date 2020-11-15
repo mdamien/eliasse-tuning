@@ -56,9 +56,23 @@ margin: 0;
 }
 #discussion-column .amdt-line {
   cursor: pointer;
+  padding: 4px;
+  border: 1px solid transparent;
+}
+#discussion-column .amdt-line.current {
+  border: 1px solid white;
+  box-sizing: border-box;
 }
 #discussion-column .amdt-line:hover {
   background: #4e4e4e;
+}
+#discussion-column .discussion-identique {
+  border-left: 5px solid #4cff334a;
+  padding: 0 10px;
+}
+#discussion-column .discussion-commune {
+  border-left: 5px solid #b633ff4a;
+  padding: 0 10px;
 }
 #title select {
     background: white;
