@@ -5,7 +5,7 @@ function Amendement(props) {
   return (
     <div className="amendement">
       <a className="lien-pdf" href={'http://www.assemblee-nationale.fr' + data.urlPDF}>PDF</a>
-      {(data.numero === DATA.prochainADiscuter.numAmdt ? <div className="en-discussion"><strong>En discussion</strong></div> : '')}
+      {(data.numeroLong === DATA.prochainADiscuter.numAmdt ? <div className="en-discussion"><strong>En discussion</strong></div> : '')}
       <div className="header">
         <center><h1>Amendement n°{data.numero}</h1></center>
         <center><p>de <span dangerouslySetInnerHTML={{__html: data.listeDesSignataires}}></span></p></center>
