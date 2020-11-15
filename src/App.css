@@ -110,11 +110,12 @@ margin: 0;
   margin: 10px;
   padding: 5px;
 }
-#discussion-column button {
+#discussion-column select {
   color: black;
   background: white;
   margin: 10px;
   padding: 0 5px;
+  max-width: 80%;
 }
 .amendement .lien-pdf {
   color: black;

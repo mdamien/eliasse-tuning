@@ -1,5 +1,5 @@
 import DATA from './data'
-import {fetchAmendement} from './fetch'
+import {fetchAmendement, fetchDivision} from './fetch'
 import {currAmdtIndex} from './utils'
 import { useEffect, useRef } from 'react';
 import render from './App';
@@ -25,22 +25,10 @@ function selectAmdt(num) {
   fetchAmendement(num)
 }
 
-function hasPrevDivision() {
-  var div = DATA.amdts_derouleur[0].place
-  for (var i = 0; i < DATA.discussion.divisions.length; i++) {
-    if (DATA.discussion.divisions[i].place === div) {
-      return i > 0
-    }
-  }
-}
-
-function hasNextDivision() {
-  var div = DATA.amdts_derouleur[0].place
-  for (var i = 0; i < DATA.discussion.divisions.length; i++) {
-    if (DATA.discussion.divisions[i].place === div) {
-      return i < DATA.discussion.divisions.length - 1
-    }
-  }
+function changeDivision(event) {
+  DATA.suiviAuto = false
+  render()
+  fetchDivision(event.target.value)
 }
 
 function SommaireDiscussion() {
@@ -48,9 +36,15 @@ function SommaireDiscussion() {
 
   return (
    <div style={{padding:10}}>
-       {hasPrevDivision() ? <button>prev</button> : null}
-       {DATA.amdts_derouleur ? DATA.amdts_derouleur[0].place : null}
-       {hasNextDivision() ? <button>suiv</button> : null}
+      <b>Division:</b> <select onChange={changeDivision} value={DATA.amdts_derouleur[0].position}>
+        {DATA.discussion.divisions.map(div =>
+            <option
+              key={div.place}
+              value={div.position}>
+              {div.place}
+            </option>
+        )}
+      </select>
       <ul>
        {DATA.amdts_derouleur ? DATA.amdts_derouleur.map(amdt => {
          var amdt_span = <span>

@@ -29,6 +29,7 @@ function fetch() {
             bibardSuffixe = DATA.prochainADiscuter.bibardSuffixe
             organeAbrv = DATA.prochainADiscuter.organeAbrv
         }
+        DATA.currentText = bibard + '|' + bibardSuffixe + '|' + organeAbrv
         $.getJSON(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/discussion.do', {
             legislature: DATA.prochainADiscuter.legislature,
             bibard: bibard,
@@ -187,4 +188,31 @@ function fetchSuiviAuto() {
     })
 }
 
-export {fetchAmendement, fetch, fetchSuiviAuto}
+function fetchDivision(position) {
+    var $ = Window.$
+    var proxy = PROXY
+
+    var bibard = ""
+    var bibardSuffixe = ""
+    var organeAbrv = ""
+
+    if (DATA.currentText) {
+        bibard = DATA.currentText.split('|')[0]
+        bibardSuffixe = DATA.currentText.split('|')[1]
+        organeAbrv = DATA.currentText.split('|')[2]
+    }
+
+    $.getJSON(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/amdtDerouleur.do', {
+        legislature: DATA.prochainADiscuter.legislature,
+        bibard: bibard,
+        bibardSuffixe: bibardSuffixe,
+        organeAbrv: organeAbrv,
+        position: position,
+    }, function(data) {
+        DATA.amdts_derouleur = data
+        render()
+        fetchAmendement(DATA.amdts_derouleur[0].numero)
+    })
+}
+
+export {fetchAmendement, fetch, fetchSuiviAuto, fetchDivision}
