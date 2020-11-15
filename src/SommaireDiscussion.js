@@ -36,6 +36,9 @@ function SommaireDiscussion() {
 
   return (
    <div style={{padding:10}}>
+       <button>prev</button>
+       {DATA.amdts_derouleur ? DATA.amdts_derouleur[0].place : null}
+       <button>suiv</button>
       <ul>
        {DATA.amdts_derouleur ? DATA.amdts_derouleur.map(amdt => {
          var amdt_span = <span>

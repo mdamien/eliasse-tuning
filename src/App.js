@@ -62,7 +62,7 @@ function App() {
                       <option
                         key={texte.textBibard + texte.textBibardSuffixe}
                         value={texte.textBibard + '|' + texte.textBibardSuffixe + '|' + org.value}>
-                        {org.text} - {texte.textTitre} ({texte.textBibard})
+                        {org.text} - {texte.textTitre} ({texte.textBibard + texte.textBibardSuffixe})
                       </option>
                     )
                   }
