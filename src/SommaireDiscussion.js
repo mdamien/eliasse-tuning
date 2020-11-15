@@ -39,7 +39,7 @@ function SommaireDiscussion() {
       <b>Division:</b> <select onChange={changeDivision} value={DATA.amdts_derouleur[0].position}>
         {DATA.discussion.divisions.map(div =>
             <option
-              key={div.place}
+              key={div.position}
               value={div.position}>
               {div.place}
             </option>
