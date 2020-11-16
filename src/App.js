@@ -59,7 +59,7 @@ function App() {
     linkLaFab = "https://www.lafabriquedelaloi.fr/articles.html?loi=" + legislature+ "-" + linkLaFab
   }
   return (
-    <div id="app">
+    <div id="app" className={window.location.toString().indexOf("neon") !== -1 ? "neon" : ""}>
       <div id="title">
         <div className="title-left">
           <span>Dérouleur d'amendements</span>
