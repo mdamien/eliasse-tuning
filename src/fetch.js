@@ -75,7 +75,9 @@ function fetch() {
                                     n += 1
                                     if (n === DATA.organes.length - 1) {
                                         render()
+                                        fetchSuiviAuto()
                                         fetchDoslegLink()
+                                        fetchDiff()
                                     }
                                 })
                             })
@@ -148,7 +150,7 @@ function fetchAmendement(num) {
                     }, function(data) {
                         DATA.text = Window.html_beautify(data)
                         render()
-                        fetchSuiviAuto()
+                        fetchDiff()
                     })
                 })
             })
@@ -178,14 +180,16 @@ function fetchSuiviAuto() {
         bibardSuffixe: bibardSuffixe,
         organeAbrv: organeAbrv,
     }, function(data) {
-        DATA.prochainADiscuter = data['prochainADiscuter']
-        if (DATA.amendements
-            && DATA.amendements[currAmdtIndex()].numero !== DATA.prochainADiscuter.numAmdt
-            && DATA.amendements[currAmdtIndex()].numeroReference !== DATA.prochainADiscuter.numAmdt
-            && DATA.amendements[currAmdtIndex()].numeroLong !== DATA.prochainADiscuter.numAmdt) {
-            fetchAmendement(DATA.prochainADiscuter.numAmdt)
+        if (data['prochainADiscuter'].bibard == bibard) {
+            DATA.prochainADiscuter = data['prochainADiscuter']
+            if (DATA.amendements
+                && DATA.amendements[currAmdtIndex()].numero !== DATA.prochainADiscuter.numAmdt
+                && DATA.amendements[currAmdtIndex()].numeroReference !== DATA.prochainADiscuter.numAmdt
+                && DATA.amendements[currAmdtIndex()].numeroLong !== DATA.prochainADiscuter.numAmdt) {
+                fetchAmendement(DATA.prochainADiscuter.numAmdt)
+            }
+            setTimeout(fetchSuiviAuto, 1000)
         }
-        setTimeout(fetchSuiviAuto, 1000)
     })
 }
 
@@ -226,6 +230,15 @@ function fetchDoslegLink() {
         var link = html_doc.querySelector('.mirror-card-header--options--content--item--link').getAttribute("href")
         link = 'http://www.assemblee-nationale.fr' + link
         DATA.doslegLink = link
+        render()
+    })
+}
+
+function fetchDiff() {
+    var $ = Window.$
+    $.get('http://0.0.0.0:8010/apply/http://www.assemblee-nationale.fr/dyn' + DATA.amendements[currAmdtIndex()].urlPDF.replace('.pdf', ''),
+        function(data) {
+        DATA.amendements[currAmdtIndex()].diff = data
         render()
     })
 }

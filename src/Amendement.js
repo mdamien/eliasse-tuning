@@ -16,7 +16,9 @@ function Amendement(props) {
       <p className="dispositif" dangerouslySetInnerHTML={{__html: data.dispositif}}/>
       <center><p><strong>EXPOSÉ SOMMAIRE</strong></p></center>
       <p className="expose" dangerouslySetInnerHTML={{__html: data.exposeSommaire}}/>
-      <a className="lien-pdf" href={'http://www.assemblee-nationale.fr' + data.urlPDF}>PDF</a>
+      <a className="lien-pdf" href={'http://www.assemblee-nationale.fr/dyn' +  data.urlPDF.replace('.pdf', '')}>
+        Amendement sur le site de l'Assemblée Nationale
+      </a>
     </div>
   );
 }

@@ -90,7 +90,7 @@ function groupedByIdentiqueAndDiscussionCommune() {
 
 function renderAmdt(amdt) {
    var amdt_span = <span>
-      {amdt.parentNumero !== 'X' && amdt.parentNumero ? 'Sous-':''}Amdt n°{amdt.numero} {amdt.auteurLabel == "Gouvernement" ? 'du' : 'de'} {amdt.auteurLabel} 
+      {amdt.parentNumero !== 'X' && amdt.parentNumero ? 'Sous-Amdt':''} {amdt.numero} {amdt.auteurLabel == "Gouvernement" ? 'du' : 'de'} {amdt.auteurLabel} 
       {amdt.auteurGroupe ? <span> ({amdt.auteurGroupe})</span> : null}
    </span>
    if (DATA.prochainADiscuter.numAmdt === amdt.numero) {

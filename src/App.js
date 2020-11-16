@@ -43,6 +43,12 @@ function changeText(event) {
   fetch()
 }
 
+function toggleAfficherDiff() {
+  DATA.afficherDiff = !DATA.afficherDiff
+  DATA.afficherTexteAmendé = false
+  render()
+}
+
 function App() {
   var linkLaFab = ''
   if (DATA.doslegLink) {
@@ -86,7 +92,7 @@ function App() {
       </div>
       : null}
       <div id="left-column" className={
-        (DATA.afficherTexteAmendé ? '': 'no-text-column')
+        (DATA.afficherTexteAmendé || DATA.afficherDiff ? '': 'no-text-column')
         + (DATA.afficherDerouleur ? '': ' no-discussion-column')
       }>
         <center>
@@ -101,6 +107,7 @@ function App() {
           <button onClick={toggleAfficherTexteAmendé}>
             {DATA.afficherTexteAmendé ? 'Cacher' : 'Afficher'} le texte amendé
           </button>
+          {DATA.amendements[currAmdtIndex()].diff ? <button onClick={toggleAfficherDiff}>hello jorld</button> : null}
         </center>
         <Amendement data={DATA.amendements[currAmdtIndex()]}/>
       </div>
@@ -108,7 +115,15 @@ function App() {
         <div id="text-column">
           <TexteAmendé/>
         </div>
-        : null }    </div>
+        : null }
+      {DATA.afficherDiff ?
+        <div id="text-column">
+          <div style={{padding:10}}>
+            <div id="texte" dangerouslySetInnerHTML={{__html: DATA.amendements[currAmdtIndex()].diff}} />
+          </div>
+        </div>
+        : null }
+      </div>
   )
 }
 
