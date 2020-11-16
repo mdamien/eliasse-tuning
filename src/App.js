@@ -53,8 +53,10 @@ function App() {
   var linkLaFab = ''
   if (DATA.doslegLink) {
     linkLaFab = DATA.doslegLink.split('/')
+    var legislature = DATA.doslegLink.split('/')
+    legislature = legislature[legislature.length-3]
     linkLaFab = linkLaFab[linkLaFab.length-1]
-    linkLaFab = "https://www.lafabriquedelaloi.fr/articles.html?loi=" + linkLaFab
+    linkLaFab = "https://www.lafabriquedelaloi.fr/articles.html?loi=" + legislature+ "-" + linkLaFab
   }
   return (
     <div id="app">
@@ -92,7 +94,7 @@ function App() {
       </div>
       : null}
       <div id="left-column" className={
-        (DATA.afficherTexteAmendé || DATA.afficherDiff ? '': 'no-text-column')
+        (DATA.afficherTexteAmendé || (DATA.afficherDiff && DATA.amendements[currAmdtIndex()].diff) ? '': 'no-text-column')
         + (DATA.afficherDerouleur ? '': ' no-discussion-column')
       }>
         <center>
@@ -107,7 +109,9 @@ function App() {
           <button onClick={toggleAfficherTexteAmendé}>
             {DATA.afficherTexteAmendé ? 'Cacher' : 'Afficher'} le texte amendé
           </button>
-          {DATA.amendements[currAmdtIndex()].diff ? <button onClick={toggleAfficherDiff}>hello jorld</button> : null}
+          {DATA.amendements[currAmdtIndex()].diff ? <button onClick={toggleAfficherDiff}>
+            {DATA.afficherDiff ? 'Cacher' : 'Afficher'} l'aperçu
+          </button> : null}
         </center>
         <Amendement data={DATA.amendements[currAmdtIndex()]}/>
       </div>
@@ -116,7 +120,7 @@ function App() {
           <TexteAmendé/>
         </div>
         : null }
-      {DATA.afficherDiff ?
+      {DATA.afficherDiff && DATA.amendements[currAmdtIndex()].diff?
         <div id="text-column">
           <div style={{padding:10}}>
             <div id="texte" dangerouslySetInnerHTML={{__html: DATA.amendements[currAmdtIndex()].diff}} />
