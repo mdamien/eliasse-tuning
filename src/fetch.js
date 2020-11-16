@@ -2,7 +2,7 @@ import render from './App'
 import DATA from './data'
 import {currAmdtIndex} from './utils'
 
-var PROXY = "http://167.99.240.236:8004/p/"
+var PROXY = "http://derouleur.dam.io:8004/p/"
 
 function fetch() {
     var $ = Window.$
@@ -236,7 +236,7 @@ function fetchDoslegLink() {
 
 function fetchDiff() {
     var $ = Window.$
-    $.get('http://0.0.0.0:8010/apply/http://www.assemblee-nationale.fr/dyn' + DATA.amendements[currAmdtIndex()].urlPDF.replace('.pdf', ''),
+    $.get('http://derouleur.dam.io:8010/apply/http://www.assemblee-nationale.fr/dyn' + DATA.amendements[currAmdtIndex()].urlPDF.replace('.pdf', ''),
         function(data) {
         DATA.amendements[currAmdtIndex()].diff = data
         render()
