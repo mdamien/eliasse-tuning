@@ -33,33 +33,9 @@ function changeDivision(event) {
 
 function groupedByIdentiqueAndDiscussionCommune() {
   var result = []
-  var current_group_identique = []
   var current_group_commune = []
 
-  function push() {
-    if (current_group_identique.length > 0) {
-      if (current_group_commune.length > 0) {
-        if (current_group_identique.length == 1) {
-          current_group_commune.push(current_group_identique[0])
-        } else {
-          current_group_commune.push({
-            _type: 'identique',
-            amdts: current_group_identique
-          })
-        }
-        current_group_identique = []
-      } else {
-        if (current_group_identique.length == 1) {
-          result.push(current_group_identique[0])
-        } else {
-          result.push({
-            _type: 'identique',
-            amdts: current_group_identique
-          })
-        }
-        current_group_identique = []
-      }
-    }
+  var push = () => {
     if (current_group_commune.length > 0) {
       result.push({
         _type: 'commune',
@@ -70,21 +46,84 @@ function groupedByIdentiqueAndDiscussionCommune() {
   }
 
   DATA.amdts_derouleur.forEach(amdt => {
-    if (!amdt.discussionIdentique && !amdt.discussionCommune) {
+    if (!amdt.discussionCommune) {
       push()
       result.push(amdt)
       return
     }
-    if (amdt.discussionCommune) {
-      // todo consecutive discussion commune
+    else {
+      if (current_group_commune.length > 0
+          && current_group_commune[0].discussionCommune != amdt.discussionCommune) {
+        push()
+      }
       current_group_commune.push(amdt)
-    }
-    if (amdt.discussionIdentique) {
-      // todo consecutive identiques
-      current_group_identique.push(amdt)
     }
   })
   push()
+
+  var grouped_by_discussion_commune = result
+  var current_group_identique = []
+  result = []
+
+  push = () => {
+    if (current_group_identique.length > 0) {
+      result.push({
+        _type: 'identique',
+        amdts: current_group_identique,
+      })
+      current_group_identique = []
+    }
+  }
+
+  grouped_by_discussion_commune.forEach(group => {
+    if (!group._type) {
+      var amdt = group
+      if (!amdt.discussionIdentique) {
+        push()
+        result.push(amdt)
+        return
+      }
+      else {
+        if (current_group_identique.length > 0
+            && current_group_identique[0].discussionIdentique != amdt.discussionIdentique) {
+          push()
+        }
+        current_group_identique.push(amdt)
+      }
+    } else {
+      var new_group_amdts = []
+
+      var pushInside = () => {
+        if (current_group_identique.length > 0) {
+          new_group_amdts.push({
+            _type: 'identique',
+            amdts: current_group_identique,
+          })
+          current_group_identique = []
+        }
+      }
+
+      group.amdts.forEach(amdt => {
+        if (!amdt.discussionIdentique) {
+          pushInside()
+          new_group_amdts.push(amdt)
+          return
+        }
+        else {
+          if (current_group_identique.length > 0
+              && current_group_identique[0].discussionIdentique != amdt.discussionIdentique) {
+            pushInside()
+          }
+          current_group_identique.push(amdt)
+        }
+      })
+      pushInside()
+      group.amdts = new_group_amdts
+      result.push(group)
+    }
+  })
+  push()
+
   return result
 }
 
