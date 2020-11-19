@@ -78,6 +78,7 @@ function fetch() {
                                         fetchSuiviAuto()
                                         fetchDoslegLink()
                                         fetchDiff()
+                                        fetchTwitterComments()
                                     }
                                 })
                             })
@@ -151,6 +152,7 @@ function fetchAmendement(num) {
                         DATA.text = Window.html_beautify(data)
                         render()
                         fetchDiff()
+                        fetchTwitterComments()
                     })
                 })
             })
@@ -243,4 +245,12 @@ function fetchDiff() {
     })
 }
 
+function fetchTwitterComments() {
+    var $ = Window.$
+    $.get('http://derouleur.dam.io:8011/tweets/http://www.assemblee-nationale.fr/dyn' + DATA.amendements[currAmdtIndex()].urlPDF.replace('.pdf', ''),
+        function(data) {
+        DATA.amendements[currAmdtIndex()].nb_tweets = data
+        render()
+    })
+}
 export {fetchAmendement, fetch, fetchSuiviAuto, fetchDivision}

@@ -22,11 +22,20 @@ function Amendement(props) {
       <p className="dispositif" dangerouslySetInnerHTML={{__html: data.dispositif}}/>
       <center><p><strong>EXPOSÉ SOMMAIRE</strong></p></center>
       <p className="expose" dangerouslySetInnerHTML={{__html: data.exposeSommaire}}/>
+      <br/>
+      <br/>
       <div className="lien-pdf">
         <a href={'http://www.assemblee-nationale.fr/dyn' +  data.urlPDF.replace('.pdf', '')}>
           Amendement sur le site de l'Assemblée Nationale
         </a>
         <br/>
+        {data.nb_tweets ? <span>
+          <a href={'https://twitter.com/search?q=http://www.assemblee-nationale.fr/dyn' +  data.urlPDF.replace('.pdf', '')}>
+          {data.nb_tweets} commentaire{data.nb_tweets > 1 ? 's':''} sur Twitter
+        </a>
+        <br/>
+        </span> : null}
+        
         <a href={lienND}>
           Amendement sur NosDéputés.fr
         </a>
