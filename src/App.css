@@ -141,10 +141,13 @@ margin: 0;
   max-width: 80%;
 }
 .amendement .lien-pdf {
-  color: black;
+  text-align: right;
   position: absolute;
   right: 10px;
   bottom: 10px;
+}
+.amendement .lien-pdf a {
+  color: black;
 }
 .amendement .en-discussion {
   border: 1px solid black;
@@ -341,7 +344,7 @@ margin: 0;
   border-radius: 30px;
 }
 
-.neon .lien-pdf {
+.neon .lien-pdf a {
   color: white;
 }
 

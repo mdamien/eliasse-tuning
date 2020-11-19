@@ -2,6 +2,12 @@ import DATA from './data'
 
 function Amendement(props) {
   var data = props.data;
+  var lienND = "https://www.nosdeputes.fr/"
+    + DATA.prochainADiscuter.legislature
+    + "/amendement/"
+    + DATA.currentText.split('|')[0] + DATA.currentText.split('|')[1]
+    + "/"
+    + data.numeroLong
   return (
     <div className="amendement">
       {data.sortEnSeance ? <div className="sort">{data.sortEnSeance}</div> : null}
@@ -16,9 +22,15 @@ function Amendement(props) {
       <p className="dispositif" dangerouslySetInnerHTML={{__html: data.dispositif}}/>
       <center><p><strong>EXPOSÉ SOMMAIRE</strong></p></center>
       <p className="expose" dangerouslySetInnerHTML={{__html: data.exposeSommaire}}/>
-      <a className="lien-pdf" href={'http://www.assemblee-nationale.fr/dyn' +  data.urlPDF.replace('.pdf', '')}>
-        Amendement sur le site de l'Assemblée Nationale
-      </a>
+      <div className="lien-pdf">
+        <a href={'http://www.assemblee-nationale.fr/dyn' +  data.urlPDF.replace('.pdf', '')}>
+          Amendement sur le site de l'Assemblée Nationale
+        </a>
+        <br/>
+        <a href={lienND}>
+          Amendement sur NosDéputés.fr
+        </a>
+      </div>
     </div>
   );
 }
