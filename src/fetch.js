@@ -161,9 +161,6 @@ function fetchAmendement(num) {
 }
 
 function fetchSuiviAuto() {
-    if (!DATA.suiviAuto) {
-        return
-    }
     var $ = Window.$
     var proxy = PROXY
 
@@ -184,11 +181,14 @@ function fetchSuiviAuto() {
     }, function(data) {
         if (data['prochainADiscuter'].bibard == bibard) {
             DATA.prochainADiscuter = data['prochainADiscuter']
-            if (DATA.amendements
-                && DATA.amendements[currAmdtIndex()].numero !== DATA.prochainADiscuter.numAmdt
-                && DATA.amendements[currAmdtIndex()].numeroReference !== DATA.prochainADiscuter.numAmdt
-                && DATA.amendements[currAmdtIndex()].numeroLong !== DATA.prochainADiscuter.numAmdt) {
-                fetchAmendement(DATA.prochainADiscuter.numAmdt)
+            render()
+            if (DATA.suiviAuto) {
+                if (DATA.amendements
+                    && DATA.amendements[currAmdtIndex()].numero !== DATA.prochainADiscuter.numAmdt
+                    && DATA.amendements[currAmdtIndex()].numeroReference !== DATA.prochainADiscuter.numAmdt
+                    && DATA.amendements[currAmdtIndex()].numeroLong !== DATA.prochainADiscuter.numAmdt) {
+                    fetchAmendement(DATA.prochainADiscuter.numAmdt)
+                }
             }
             setTimeout(fetchSuiviAuto, 1000)
         }
