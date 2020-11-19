@@ -2,6 +2,7 @@ import logging
 import shlex
 import json
 import os
+import tempfile
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -13,13 +14,12 @@ CORS(app)
 
 @app.route('/tweets/<path:url>')
 def proxy(url):
-    with open("tweets.json", 'w') as f:
-        pass
-    cmd = "twint -s " + shlex.quote(url) + " -o tweets.json --json --limit 100"
+    f = tempfile.NamedTemporaryFile()
+    cmd = "twint -s " + shlex.quote(url) + " -o " + f.name + " --json --limit 100"
     print(cmd)
     os.system(cmd)
     tweets = []
-    for line in open("tweets.json"):
+    for line in open(f.name):
         tweets.append(json.loads(line))
     return app.response_class(
         response=json.dumps(len(tweets)),
