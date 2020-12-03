@@ -12,7 +12,8 @@ function Amendement(props) {
     <div className="amendement">
       {data.sortEnSeance ? <div className="sort">{data.sortEnSeance}</div> : null}
       {(data.numeroLong === DATA.prochainADiscuter.numAmdt  || data.numero === DATA.prochainADiscuter.numAmdt ?
-        <div className="en-discussion"><strong>En discussion</strong></div> : '')}
+        <div className="en-discussion"><strong>En discussion</strong></div> : (data.amdtsRestants ?
+        <div className="en-discussion"><strong>En discussion dans<br/>{data.amdtsRestants} amendements</strong></div> : ''))}
       <div className="header">
         <center><h1>{data.numeroParent ? 'Sous-': ''}Amendement n°{data.numero}</h1></center>
         <center><p>proposé par <span dangerouslySetInnerHTML={{__html: data.listeDesSignataires}}></span></p></center>

@@ -173,7 +173,6 @@ function fetchSuiviAuto() {
         bibardSuffixe = DATA.currentText.split('|')[1]
         organeAbrv = DATA.currentText.split('|')[2]
     }
-
     $.getJSON(proxy + "http://eliasse.assemblee-nationale.fr/eliasse/prochainADiscuter.do", {
         bibard: bibard,
         bibardSuffixe: bibardSuffixe,
@@ -189,9 +188,93 @@ function fetchSuiviAuto() {
                     && DATA.amendements[currAmdtIndex()].numeroLong !== DATA.prochainADiscuter.numAmdt) {
                     fetchAmendement(DATA.prochainADiscuter.numAmdt)
                 }
+            } else {
+                // count how many amendement before selected one
+                fetchHowMany(0, DATA.amdts_derouleur[0].position)
             }
             setTimeout(fetchSuiviAuto, 1000)
         }
+    })
+}
+
+
+function comparePositions(pos1, pos2) {
+   var pos1_0 = parseInt(pos1.split('/')[0])
+   var pos1_1 = parseInt(pos1.split('/')[1])
+   var pos2_0 = parseInt(pos2.split('/')[0])
+   var pos2_1 = parseInt(pos2.split('/')[1])
+
+   if (pos1_1 > pos2_1) {
+      return true
+   }
+   if (pos1_1 === pos2_1) {
+      return pos1_0 >= pos2_0
+   }
+   return false
+}
+
+function fetchHowMany(count, position) {
+    var $ = Window.$
+    var proxy = PROXY
+
+    var bibard = DATA.currentText.split('|')[0]
+    var bibardSuffixe = DATA.currentText.split('|')[1]
+    var organeAbrv = DATA.currentText.split('|')[2]
+
+
+    var url = 'http://eliasse.assemblee-nationale.fr/eliasse/amendement.do'
+        + '?legislature=' + DATA.prochainADiscuter.legislature 
+        + '&bibard=' + bibard
+        + '&bibardSuffixe=' + bibardSuffixe
+        + '&organeAbrv=' + organeAbrv
+        + '&numAmdt=' + DATA.prochainADiscuter.numAmdt
+    $.getJSON(proxy + url, function(data) {
+        var prochainADiscuter = data.amendements[0]
+        $.getJSON(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/amdtDerouleur.do', {
+            legislature: DATA.prochainADiscuter.legislature,
+            bibard: bibard,
+            bibardSuffixe: bibardSuffixe,
+            organeAbrv: organeAbrv,
+            position: position,
+        }, function(data) {
+            var dada = DATA
+            var prev_position = null
+            var stop = false
+            dada.discussion.divisions.forEach(div => {
+                if (stop) {
+                    return
+                }
+                if (comparePositions(div.position, position)) {
+                    stop = true
+                    return
+                }
+                prev_position = div.position
+            })
+            data.reverse().forEach(amdt => {
+                var pos = DATA.amendements[currAmdtIndex()].position
+                if (comparePositions(amdt.position, pos)) {
+                    if (amdt.position == pos) {
+                        count += 1
+                    }
+                    return
+                }
+                if (comparePositions(prochainADiscuter.position, amdt.position)) {
+                    debugger
+                    prev_position = null
+                    return
+                }
+                if (comparePositions(amdt.position, position)) {
+                    count += 1
+                    return
+                }
+            })
+            if (prev_position) {
+                fetchHowMany(count, prev_position)
+            } else if (count > 0) {
+                DATA.amendements[currAmdtIndex()].amdtsRestants = count
+                render()
+            }
+        })
     })
 }
 

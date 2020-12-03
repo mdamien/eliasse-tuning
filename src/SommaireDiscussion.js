@@ -4,20 +4,6 @@ import {currAmdtIndex} from './utils'
 import { useEffect, useRef } from 'react';
 import render from './App';
 
-function comparePositions(pos1, pos2) {
-   var pos1_0 = parseInt(pos1.split('/')[0])
-   var pos1_1 = parseInt(pos1.split('/')[1])
-   var pos2_0 = parseInt(pos2.split('/')[0])
-   var pos2_1 = parseInt(pos2.split('/')[1])
-
-   if (pos1_1 > pos2_1) {
-      return true
-   }
-   if (pos1_1 === pos2_1) {
-      return pos1_0 >= pos2_0
-   }
-   return false
-}
 
 function selectAmdt(num) {
   DATA.suiviAuto = false
@@ -145,8 +131,6 @@ function renderAmdt(amdt) {
 }
 
 function SommaireDiscussion() {
-  console.log(DATA)
-
   return (
    <div style={{padding:10}}>
       <b>Division:</b> <select onChange={changeDivision} value={DATA.amdts_derouleur[0].position}>

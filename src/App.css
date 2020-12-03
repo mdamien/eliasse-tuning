@@ -155,6 +155,7 @@ margin: 0;
   position: absolute;
   right: 10px;
   top: 10px;
+  text-align: right;
 }
 .amendement .sort {
   border: 1px solid black;
