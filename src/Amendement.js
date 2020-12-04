@@ -10,6 +10,7 @@ function Amendement(props) {
     + data.numeroLong
   return (
     <div className="amendement">
+      <br/>
       {data.sortEnSeance ? <div className="sort">{data.sortEnSeance}</div> : null}
       {(data.numeroLong === DATA.prochainADiscuter.numAmdt  || data.numero === DATA.prochainADiscuter.numAmdt ?
         <div className="en-discussion"><strong>En discussion</strong></div> : (data.amdtsRestants ?

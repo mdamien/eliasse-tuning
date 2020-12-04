@@ -192,7 +192,7 @@ function fetchSuiviAuto() {
                 // count how many amendement before selected one
                 fetchHowMany(0, DATA.amdts_derouleur[0].position)
             }
-            setTimeout(fetchSuiviAuto, 1000)
+            setTimeout(fetchSuiviAuto, 2000)
         }
     })
 }
@@ -230,6 +230,9 @@ function fetchHowMany(count, position) {
         + '&numAmdt=' + DATA.prochainADiscuter.numAmdt
     $.getJSON(proxy + url, function(data) {
         var prochainADiscuter = data.amendements[0]
+        if (comparePositions(prochainADiscuter.position, DATA.amendements[currAmdtIndex()].position)) {
+            return
+        }
         $.getJSON(proxy + 'http://eliasse.assemblee-nationale.fr/eliasse/amdtDerouleur.do', {
             legislature: DATA.prochainADiscuter.legislature,
             bibard: bibard,
@@ -250,15 +253,15 @@ function fetchHowMany(count, position) {
                 prev_position = div.position
             })
             data.reverse().forEach(amdt => {
-                if (comparePositions(prochainADiscuter.position, amdt.position)) {
-                    prev_position = null
-                    return
-                }
                 var pos = DATA.amendements[currAmdtIndex()].position
                 if (comparePositions(amdt.position, pos)) {
-                    if (amdt.numero == pos) {
+                    if (amdt.position == pos) {
                         count += 1
                     }
+                    return
+                }
+                if (comparePositions(prochainADiscuter.position, amdt.position)) {
+                    prev_position = null
                     return
                 }
                 if (comparePositions(amdt.position, position)) {
