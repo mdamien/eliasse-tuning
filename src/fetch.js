@@ -237,10 +237,9 @@ function fetchHowMany(count, position) {
             organeAbrv: organeAbrv,
             position: position,
         }, function(data) {
-            var dada = DATA
             var prev_position = null
             var stop = false
-            dada.discussion.divisions.forEach(div => {
+            DATA.discussion.divisions.forEach(div => {
                 if (stop) {
                     return
                 }
@@ -251,16 +250,15 @@ function fetchHowMany(count, position) {
                 prev_position = div.position
             })
             data.reverse().forEach(amdt => {
-                var pos = DATA.amendements[currAmdtIndex()].position
-                if (comparePositions(amdt.position, pos)) {
-                    if (amdt.position == pos) {
-                        count += 1
-                    }
+                if (comparePositions(prochainADiscuter.position, amdt.position)) {
+                    prev_position = null
                     return
                 }
-                if (comparePositions(prochainADiscuter.position, amdt.position)) {
-                    debugger
-                    prev_position = null
+                var pos = DATA.amendements[currAmdtIndex()].position
+                if (comparePositions(amdt.position, pos)) {
+                    if (amdt.numero == pos) {
+                        count += 1
+                    }
                     return
                 }
                 if (comparePositions(amdt.position, position)) {
